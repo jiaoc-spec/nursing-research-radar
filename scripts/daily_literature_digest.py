@@ -1001,7 +1001,7 @@ def fetch_arxiv_papers(
     papers_by_key: dict[str, dict[str, Any]] = {}
     errors: list[dict[str, str]] = []
     for group in KEYWORD_GROUPS:
-        term = group["label"]
+        term = group.get("arxiv_term") or group["label"]
         url = arxiv_query_url(term, args.arxiv_rows)
         try:
             xml_text = http_text(url)
