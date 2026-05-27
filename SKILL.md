@@ -90,6 +90,39 @@ Do not read paywalled full text or auto-login to university/publisher sites duri
 - Highlight papers from high-impact nursing journals: Journal of Psychiatric and Mental Health Nursing, International Journal of Mental Health Nursing, Archives of Psychiatric Nursing, Issues in Mental Health Nursing, Perspectives in Psychiatric Care.
 - Mention PubMed, Crossref, OpenAlex, or arXiv API errors in the digest and summarize successfully fetched results.
 
+## Digest Structure
+
+Group papers by priority using `##` section headings, then give each paper a `###` heading with a short German title:
+
+```
+## HOHE PRIORITÄT
+
+---
+
+### 1 — [Kurzer deutscher Titel]
+
+**Titel:** [Original English title]
+...
+
+## MITTLERE PRIORITÄT
+
+---
+
+### 2 — [Kurzer deutscher Titel]
+...
+
+## NIEDRIGE PRIORITÄT
+
+---
+
+### 3 — [Kurzer deutscher Titel]
+...
+```
+
+- The `###` heading uses a short descriptive German title (translated/paraphrased from the original), not a literal word-for-word translation.
+- The original English title follows immediately as `**Titel:**` field below the heading.
+- If the digest language is not German, use the configured language for the short heading title instead.
+
 ## Automation Prompt Requirements
 
 The automation prompt must include:
