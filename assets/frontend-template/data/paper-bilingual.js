@@ -1,0 +1,1 @@
+window.PAPER_VAULT_BILINGUAL = {};

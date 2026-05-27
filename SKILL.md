@@ -1,23 +1,35 @@
 ---
 name: nursing-literature-digest
-description: Set up, run, modify, or troubleshoot a personal AI nursing literature digest automation that monitors PubMed/MEDLINE, Crossref, OpenAlex, and arXiv for new papers by nursing and psychiatric nursing keywords, summarizes open metadata/abstracts, saves local Markdown or DOCX archives, and sends daily email digests through the Gmail connector. Use when the user asks for daily or weekly nursing paper monitoring, psychiatric nursing alerts, evidence-based nursing digests, AI paper summary emails, Gmail nursing literature updates, or a 09:00 recurring nursing literature automation.
+description: Set up, run, modify, or troubleshoot a personal AI nursing and psychiatric nursing literature automation that monitors PubMed/MEDLINE, Crossref, OpenAlex, and arXiv for new papers by keyword groups, summarizes open metadata and abstracts, saves local Markdown archives, sends daily email digests through Gmail, and builds a searchable local Paper Vault of categorized research cards. Use when the user asks for daily nursing paper monitoring, psychiatric nursing literature alerts, evidence-based nursing digests, AI paper summary emails, Gmail nursing literature updates, a recurring 09:00 automation, a local visual paper library, or multi-digest vault setups with digest-tab navigation.
 ---
 
 # Nursing Literature Digest
 
 ## Overview
 
-Use this skill to create a user's own daily nursing and psychiatric nursing literature digest. The bundled fetch script gathers open metadata and abstracts from PubMed/MEDLINE (primary source), Crossref, OpenAlex, and optionally arXiv. Claude writes the AI interpretation, saves the archive, sends email through Gmail when connected, and creates the recurring automation.
+Use this skill to create a personal daily nursing and psychiatric nursing literature digest. The bundled fetch script gathers open metadata and abstracts from PubMed/MEDLINE (primary source), Crossref, OpenAlex, and optionally arXiv. Claude writes the AI interpretation, saves the archive, sends email through Gmail when connected, and creates the recurring automation.
+
+An integrated Paper Vault (`scripts/paper_vault.py`) turns High and Medium priority papers into a local static web dashboard — searchable, categorized, and persistent across daily runs.
 
 PubMed/MEDLINE is the primary source for nursing literature. Crossref covers publisher-specific journals. OpenAlex enriches abstracts and open-access links. arXiv covers nursing informatics and health AI preprints.
 
 Do not read paywalled full text or auto-login to university/publisher sites during the unattended daily run. Full-text follow-up is a separate explicit task after the user logs in themselves or provides PDFs.
 
+## Scripts
+
+| Script | Purpose | Key subcommands |
+|---|---|---|
+| `scripts/daily_literature_digest.py` | Fetch papers from APIs, write JSON, mark success | `fetch`, `mark-success` |
+| `scripts/paper_vault.py` | Build and update local static web vault | `init`, `import-high` |
+| `scripts/markdown_to_docx.py` | Convert Markdown digest to DOCX | _(called directly)_ |
+
+Frontend template for the vault lives in `assets/frontend-template/`.
+
 ## Setup Workflow
 
 1. Confirm or infer the user's settings:
    - Recipient email for the digest.
-   - Research keywords, grouped by theme when useful. Default keyword groups cover core psychiatric nursing topics.
+   - Research keywords, grouped by theme. Each group may have a `vault_category` to control how papers appear in the vault (separate from PubMed search granularity).
    - Language: ask if unclear; default to `zh-CN`.
    - Timezone: ask if unclear; otherwise use the user's local timezone.
    - Schedule time: default to `09:00`.
@@ -36,14 +48,17 @@ Do not read paywalled full text or auto-login to university/publisher sites duri
      "keyword_groups": [
        {
          "label": "psychiatric nursing",
+         "vault_category": "Pflege als Profession und Wissenschaft",
          "terms": ["psychiatric nursing", "mental health nursing", "psychiatric-mental health nursing"]
        },
        {
          "label": "borderline personality disorder",
+         "vault_category": "Psychische Erkrankungen und Diagnostik",
          "terms": ["borderline personality disorder", "emotionally unstable personality disorder", "BPD nursing care"]
        },
        {
          "label": "dialectical behavior therapy",
+         "vault_category": "Behandlung und Therapieansätze",
          "terms": ["dialectical behavior therapy", "dialectical behaviour therapy", "DBT skills training"]
        }
      ],
@@ -55,7 +70,7 @@ Do not read paywalled full text or auto-login to university/publisher sites duri
      "max_papers": 40
    }
    ```
-   Use full keyword groups from `references/default-config.md` for psychiatric nursing coverage.
+   Use full keyword groups from `references/default-config.md` for full psychiatric nursing coverage (46 groups, 5 vault categories).
 4. Run a dry fetch:
    ```bash
    python scripts/daily_literature_digest.py --config nursing-literature-digest.config.json fetch --include-seen
@@ -75,10 +90,17 @@ Do not read paywalled full text or auto-login to university/publisher sites duri
    ```bash
    python scripts/daily_literature_digest.py --config nursing-literature-digest.config.json mark-success --data-file <JSON_PATH> --digest-file <DIGEST_PATH> --email-status <sent|failed|not-configured>
    ```
-9. Create a Codex cron automation at the user's configured local time. For 09:00 daily:
-   ```text
-   FREQ=DAILY;BYHOUR=9;BYMINUTE=0;BYSECOND=0
+9. Update the Paper Vault (see Paper Vault section below):
+   ```bash
+   python scripts/paper_vault.py import-high --vault-dir <VAULT_DIR> \
+     --digest-data-dir nursing-literature-digests/data \
+     --config nursing-literature-digest.config.json \
+     --priority Medium --digest-label "Nursing-Digest" --no-require-fulltext
    ```
+10. Create a Codex cron automation at the user's configured local time. For 09:00 daily:
+    ```text
+    FREQ=DAILY;BYHOUR=9;BYMINUTE=0;BYSECOND=0
+    ```
 
 ## Summary Rules
 
@@ -123,6 +145,81 @@ Group papers by priority using `##` section headings, then give each paper a `##
 - The original English title follows immediately as `**Titel:**` field below the heading.
 - If the digest language is not German, use the configured language for the short heading title instead.
 
+## Paper Vault
+
+The Paper Vault is a local static web dashboard that makes high-priority papers permanently visible, categorized, and searchable. It complements the daily digest — the digest finds and emails papers, the vault keeps them organized for long-term reference.
+
+### When to use
+
+- After a fetch has produced new High or Medium papers.
+- When the user wants a persistent visual library across multiple digest runs.
+- For multi-digest setups (nursing + psychiatry-medicine + AI nursing), each with its own `--digest-label`.
+
+### Vault categories vs. keyword groups
+
+Keyword groups control PubMed/Crossref/arXiv search granularity. The `vault_category` field on each group controls how papers are grouped in the vault display. Use 3–5 broad `vault_category` values per digest regardless of how many keyword groups exist.
+
+Example for psychiatric nursing (5 vault categories, 46 keyword groups):
+- `"Psychische Erkrankungen und Diagnostik"` — schizophrenia, BPD, depression, anxiety, substance use, …
+- `"Behandlung und Therapieansätze"` — DBT, trauma-informed care, de-escalation, psychoeducation, …
+- `"Pflege als Profession und Wissenschaft"` — inpatient, community, evidence-based, nursing theory, …
+- `"Forensische Psychiatrie"` — forensic nursing, coercion, restraint, involuntary treatment, …
+- `"Pflegende selbst"` — burnout, supervision, moral distress, workforce, education, …
+
+### Setup
+
+```bash
+# Initialize once
+python scripts/paper_vault.py init --vault-dir <VAULT_DIR>
+
+# Import after each fetch (add to daily run script as Step 5)
+python scripts/paper_vault.py import-high \
+  --vault-dir <VAULT_DIR> \
+  --digest-data-dir nursing-literature-digests/data \
+  --config nursing-literature-digest.config.json \
+  --priority Medium \
+  --max-areas 12 \
+  --digest-label "Nursing-Digest" \
+  --no-require-fulltext
+
+# Serve locally
+cd <VAULT_DIR> && python3 -m http.server 8766 --bind 127.0.0.1
+# Open: http://127.0.0.1:8766/index.html
+```
+
+### Multi-digest vault
+
+Run `import-high` once per digest config, each with its own `--digest-label`. Papers are deduplicated by DOI/PMID across runs. The frontend shows a tab strip (Alle Digests / Nursing-Digest / Psychiatrie-Medizin-Digest / …) and groups papers by Digest → Vault Category → Paper.
+
+### Full-text requirement
+
+By default, `import-high` requires a local PDF or extracted full-text before importing a paper as a normal card (`--require-fulltext`). Papers without full text are written to `sources/fulltext-inbox/to-download-YYYY-MM-DD.md`.
+
+Use `--no-require-fulltext` only for temporary abstract-level cards. Cards created this way get `readingStatus: needs-fulltext` and display a limitation notice.
+
+### launchd server (macOS)
+
+To start the vault server automatically at login, install a launchd agent:
+
+```xml
+<!-- ~/Library/LaunchAgents/com.nursing.paper-vault.server.plist -->
+<key>ProgramArguments</key>
+<array>
+  <string>/usr/bin/python3</string>
+  <string>-m</string><string>http.server</string>
+  <string>8766</string>
+  <string>--bind</string><string>127.0.0.1</string>
+</array>
+<key>WorkingDirectory</key>
+<string>/path/to/vault-dir</string>
+<key>RunAtLoad</key><true/>
+<key>KeepAlive</key><true/>
+```
+
+```bash
+launchctl load ~/Library/LaunchAgents/com.nursing.paper-vault.server.plist
+```
+
 ## Automation Prompt Requirements
 
 The automation prompt must include:
@@ -134,6 +231,7 @@ The automation prompt must include:
 - Instruction to summarize abstracts/open metadata only during the unattended run.
 - Instruction to use Gmail connector if available.
 - Instruction to call `mark-success` with `sent`, `failed`, or `not-configured`.
+- Instruction to run `paper_vault.py import-high` as Step 5 after mark-success.
 - A warning that local Codex automations may not run if the computer is asleep or the local runner is not active.
 
 ## Full-Text Follow-Up
@@ -152,3 +250,16 @@ When the user says they have logged in to ScienceDirect, PubMed Central, a unive
 
 - Read `references/default-config.md` when a user asks what defaults are used or wants a starter configuration.
 - Use `scripts/markdown_to_docx.py` only when the user explicitly wants DOCX output.
+
+## Credits
+
+`scripts/paper_vault.py` and `assets/frontend-template/` are adapted from
+**research-radar-paper-vault** by [xuezheng627](https://github.com/xuezheng627).
+Source: <https://github.com/xuezheng627/research-radar-paper-vault>
+
+Adaptations made for this skill:
+- `vault_category` field on keyword groups to separate search granularity from vault display
+- `digestSource` tagging for multi-digest vaults with tab-based navigation
+- Digest → Area → Paper three-level frontend hierarchy
+- Python 3.9 compatibility (`write_text` newline handling)
+- Bidirectional substring matching in `matching_keyword_groups()`
