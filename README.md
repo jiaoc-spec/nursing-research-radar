@@ -137,8 +137,7 @@ nursing-literature-digest/
 
 ## License
 
-MIT — see [LICENSE](LICENSE).
+This project is licensed under the MIT License. See [LICENSE](LICENSE) for details.
 
-**Upstream projects:**
-- Digest fetch script based on [daily-literature-digest-skill](https://github.com/xuezheng627/daily-literature-digest-skill) by [xuezheng627](https://github.com/xuezheng627), licensed under MIT. Adapted for psychiatric and mental health nursing.
-- Paper Vault (`scripts/paper_vault.py`, `assets/frontend-template/`) adapted from [research-radar-paper-vault](https://github.com/xuezheng627/research-radar-paper-vault) by [xuezheng627](https://github.com/xuezheng627). Adaptations: `vault_category` support, `digestSource` tagging, digest-tab UI, Python 3.9 compatibility, bidirectional keyword matching.
+This project includes components adapted from MIT-licensed open-source projects.
+See [NOTICE](NOTICE) for third-party copyright notices.
