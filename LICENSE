@@ -23,6 +23,12 @@ SOFTWARE.
 ---
 
 This project is derived from:
+
   daily-literature-digest-skill by xuezheng627
   https://github.com/xuezheng627/daily-literature-digest-skill
   Licensed under the MIT License
+
+  research-radar-paper-vault by xuezheng627
+  https://github.com/xuezheng627/research-radar-paper-vault
+  Licensed under the MIT License
+  Adapted files: scripts/paper_vault.py, assets/frontend-template/
