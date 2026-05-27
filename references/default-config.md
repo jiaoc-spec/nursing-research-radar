@@ -35,105 +35,52 @@ Use these defaults when the user asks for a starter daily nursing literature dig
   "pubmed_rows": 30,
   "max_papers": 40,
   "keyword_groups": [
-    {
-      "label": "psychiatric nursing",
-      "terms": [
-        "psychiatric nursing",
-        "mental health nursing",
-        "psychiatric-mental health nursing",
-        "inpatient psychiatric nursing",
-        "community mental health nursing"
-      ]
-    },
-    {
-      "label": "therapeutic relationship / communication",
-      "terms": [
-        "therapeutic relationship",
-        "therapeutic communication",
-        "therapeutic alliance",
-        "nurse-patient relationship",
-        "milieu therapy"
-      ]
-    },
-    {
-      "label": "borderline personality disorder",
-      "terms": [
-        "borderline personality disorder",
-        "emotionally unstable personality disorder",
-        "personality disorder nursing",
-        "BPD nursing care"
-      ]
-    },
-    {
-      "label": "dialectical behavior therapy",
-      "terms": [
-        "dialectical behavior therapy",
-        "dialectical behaviour therapy",
-        "DBT skills training",
-        "DBT nursing",
-        "DBT psychiatric"
-      ]
-    },
-    {
-      "label": "schizophrenia / psychosis nursing",
-      "terms": [
-        "schizophrenia nursing",
-        "psychosis nursing care",
-        "first-episode psychosis",
-        "early psychosis intervention",
-        "antipsychotic nursing"
-      ]
-    },
-    {
-      "label": "bipolar disorder nursing",
-      "terms": [
-        "bipolar disorder nursing",
-        "bipolar disorder care",
-        "mania nursing",
-        "mood stabilizer nursing"
-      ]
-    },
-    {
-      "label": "psychiatric crisis / emergency",
-      "terms": [
-        "psychiatric crisis intervention",
-        "mental health crisis nursing",
-        "psychiatric emergency nursing",
-        "suicide prevention nursing",
-        "self-harm nursing",
-        "aggression management psychiatric"
-      ]
-    },
-    {
-      "label": "trauma-informed care",
-      "terms": [
-        "trauma-informed care",
-        "trauma-informed nursing",
-        "PTSD nursing",
-        "complex PTSD care",
-        "adverse childhood experiences nursing"
-      ]
-    },
-    {
-      "label": "forensic psychiatric nursing",
-      "terms": [
-        "forensic psychiatric nursing",
-        "forensic mental health nursing",
-        "compulsory psychiatric treatment",
-        "involuntary hospitalization nursing",
-        "secure psychiatric unit"
-      ]
-    },
-    {
-      "label": "psychopharmacology nursing",
-      "terms": [
-        "psychopharmacology nursing",
-        "psychiatric medication management",
-        "clozapine nursing",
-        "medication adherence psychiatric",
-        "antidepressant nursing"
-      ]
-    }
+    { "label": "schizophrenia / psychosis nursing", "vault_category": "Psychische Erkrankungen und Diagnostik", "terms": ["schizophrenia nursing", "psychosis nursing", "first-episode psychosis", "early psychosis intervention", "antipsychotic nursing", "psychotic disorder nursing"], "pubmed_query": "(\"Schizophrenia\"[MeSH] OR \"Psychotic Disorders\"[MeSH]) AND (\"Psychiatric Nursing\"[MeSH] OR nurs*[tiab])" },
+    { "label": "borderline personality disorder", "vault_category": "Psychische Erkrankungen und Diagnostik", "terms": ["borderline personality disorder", "emotionally unstable personality disorder", "BPD nursing", "borderline nursing care"], "pubmed_query": "\"Borderline Personality Disorder\"[MeSH] AND (nurs*[tiab] OR \"Psychiatric Nursing\"[MeSH])" },
+    { "label": "bipolar disorder nursing", "vault_category": "Psychische Erkrankungen und Diagnostik", "terms": ["bipolar disorder nursing", "bipolar disorder care nursing", "mania nursing", "mood stabilizer nursing"], "pubmed_query": "\"Bipolar Disorder\"[MeSH] AND (nurs*[tiab] OR \"Psychiatric Nursing\"[MeSH])" },
+    { "label": "major depression nursing", "vault_category": "Psychische Erkrankungen und Diagnostik", "terms": ["depression nursing", "major depressive disorder nursing", "depressive disorder nursing care", "antidepressant nursing"], "pubmed_query": "\"Depressive Disorder, Major\"[MeSH] AND (nurs*[tiab] OR \"Psychiatric Nursing\"[MeSH])" },
+    { "label": "anxiety disorders nursing", "vault_category": "Psychische Erkrankungen und Diagnostik", "terms": ["anxiety disorders nursing", "anxiety nursing care", "panic disorder nursing", "social anxiety nursing", "phobia nursing"], "pubmed_query": "\"Anxiety Disorders\"[MeSH] AND (nurs*[tiab] OR \"Psychiatric Nursing\"[MeSH])" },
+    { "label": "OCD nursing", "vault_category": "Psychische Erkrankungen und Diagnostik", "terms": ["OCD nursing", "obsessive-compulsive disorder nursing", "obsessive compulsive nursing care"], "pubmed_query": "\"Obsessive-Compulsive Disorder\"[MeSH] AND (nurs*[tiab] OR \"Psychiatric Nursing\"[MeSH])" },
+    { "label": "eating disorders nursing", "vault_category": "Psychische Erkrankungen und Diagnostik", "terms": ["eating disorders nursing", "anorexia nervosa nursing", "bulimia nursing", "eating disorder nursing care"], "pubmed_query": "\"Feeding and Eating Disorders\"[MeSH] AND (nurs*[tiab] OR \"Psychiatric Nursing\"[MeSH])" },
+    { "label": "PTSD / trauma nursing", "vault_category": "Psychische Erkrankungen und Diagnostik", "terms": ["PTSD nursing", "post-traumatic stress disorder nursing", "complex PTSD care", "trauma disorder nursing"], "pubmed_query": "\"Stress Disorders, Post-Traumatic\"[MeSH] AND (nurs*[tiab] OR \"Psychiatric Nursing\"[MeSH])" },
+    { "label": "substance use disorders nursing", "vault_category": "Psychische Erkrankungen und Diagnostik", "terms": ["substance use disorder nursing", "addiction nursing", "alcohol use disorder nursing", "drug addiction nursing", "opioid use disorder nursing"], "pubmed_query": "\"Substance-Related Disorders\"[MeSH] AND (nurs*[tiab] OR \"Psychiatric Nursing\"[MeSH])" },
+    { "label": "dual diagnosis / comorbidity nursing", "vault_category": "Psychische Erkrankungen und Diagnostik", "terms": ["dual diagnosis nursing", "comorbidity mental health nursing", "co-occurring disorders nursing"], "pubmed_query": "(dual diagnosis[tiab] OR comorbidity[tiab] OR \"co-occurring disorders\"[tiab]) AND (nurs*[tiab] OR \"Psychiatric Nursing\"[MeSH])" },
+    { "label": "dementia psychiatric nursing", "vault_category": "Psychische Erkrankungen und Diagnostik", "terms": ["dementia nursing psychiatric", "dementia behavioural symptoms nursing", "BPSD nursing", "Alzheimer nursing psychiatric"], "pubmed_query": "(\"Dementia\"[MeSH] OR \"Alzheimer Disease\"[MeSH]) AND (\"Psychiatric Nursing\"[MeSH] OR psychiatric nurs*[tiab])" },
+    { "label": "ADHD nursing", "vault_category": "Psychische Erkrankungen und Diagnostik", "terms": ["ADHD nursing", "attention deficit hyperactivity disorder nursing", "ADHD nursing care"], "pubmed_query": "\"Attention Deficit Disorder with Hyperactivity\"[MeSH] AND (nurs*[tiab] OR \"Psychiatric Nursing\"[MeSH])" },
+    { "label": "autism spectrum disorder nursing", "vault_category": "Psychische Erkrankungen und Diagnostik", "terms": ["autism spectrum disorder nursing", "ASD nursing", "autism nursing care"], "pubmed_query": "\"Autism Spectrum Disorder\"[MeSH] AND (nurs*[tiab] OR \"Psychiatric Nursing\"[MeSH])" },
+    { "label": "personality disorders nursing", "vault_category": "Psychische Erkrankungen und Diagnostik", "terms": ["personality disorders nursing", "personality disorder nursing care", "narcissistic personality disorder nursing", "antisocial personality nursing"], "pubmed_query": "\"Personality Disorders\"[MeSH] AND (nurs*[tiab] OR \"Psychiatric Nursing\"[MeSH])" },
+    { "label": "dialectical behavior therapy", "vault_category": "Behandlung und Therapieansätze", "terms": ["dialectical behavior therapy", "dialectical behaviour therapy", "DBT skills training", "DBT nursing", "DBT psychiatric"], "pubmed_query": "\"Dialectical Behavior Therapy\"[MeSH] OR (dialectical behavior therap*[tiab] AND (nurs*[tiab] OR psychiatr*[tiab]))" },
+    { "label": "trauma-informed care nursing", "vault_category": "Behandlung und Therapieansätze", "terms": ["trauma-informed care", "trauma-informed nursing", "trauma-informed approach", "adverse childhood experiences nursing"], "pubmed_query": "(\"Trauma-Informed Care\"[MeSH] OR trauma-informed care[tiab] OR trauma-informed nursing[tiab]) AND (nurs*[tiab] OR psychiatr*[tiab])" },
+    { "label": "therapeutic relationship / communication", "vault_category": "Behandlung und Therapieansätze", "terms": ["therapeutic relationship nursing", "therapeutic communication nursing", "nurse-patient relationship", "therapeutic alliance nursing", "milieu therapy"], "pubmed_query": "(\"Nurse-Patient Relations\"[MeSH] OR therapeutic relationship[tiab] OR therapeutic communication[tiab]) AND (psychiatr*[tiab] OR \"Psychiatric Nursing\"[MeSH])" },
+    { "label": "psychoeducation nursing", "vault_category": "Behandlung und Therapieansätze", "terms": ["psychoeducation nursing", "psychiatric patient education", "mental health psychoeducation"], "pubmed_query": "(psychoeducation[tiab] OR \"patient education\"[tiab]) AND (nurs*[tiab] OR \"Psychiatric Nursing\"[MeSH])" },
+    { "label": "recovery-oriented care nursing", "vault_category": "Behandlung und Therapieansätze", "terms": ["recovery-oriented care nursing", "recovery approach psychiatry", "mental health recovery nursing", "strengths-based psychiatric nursing"], "pubmed_query": "(recovery-oriented[tiab] OR \"recovery approach\"[tiab] OR \"strengths-based\"[tiab]) AND (nurs*[tiab] OR \"Psychiatric Nursing\"[MeSH])" },
+    { "label": "de-escalation / aggression management psychiatric", "vault_category": "Behandlung und Therapieansätze", "terms": ["de-escalation psychiatric", "aggression management psychiatric nursing", "violence prevention psychiatric nursing"], "pubmed_query": "(de-escalation[tiab] OR \"aggression management\"[tiab] OR \"violence prevention\"[tiab]) AND (nurs*[tiab] OR psychiatr*[tiab])" },
+    { "label": "family interventions psychiatric nursing", "vault_category": "Behandlung und Therapieansätze", "terms": ["family intervention psychiatric nursing", "family therapy psychiatric nursing", "carer support mental health nursing", "family psychoeducation"], "pubmed_query": "(\"Family Therapy\"[MeSH] OR family intervention*[tiab] OR carer support[tiab]) AND (nurs*[tiab] OR \"Psychiatric Nursing\"[MeSH])" },
+    { "label": "early intervention psychosis nursing", "vault_category": "Behandlung und Therapieansätze", "terms": ["early intervention psychosis nursing", "first episode psychosis nursing", "early psychosis program nursing"], "pubmed_query": "(early intervention[tiab] AND psychos*[tiab] OR first-episode psychosis[tiab]) AND (nurs*[tiab] OR \"Psychiatric Nursing\"[MeSH])" },
+    { "label": "safewards / milieu therapy", "vault_category": "Behandlung und Therapieansätze", "terms": ["safewards", "milieu therapy psychiatric", "therapeutic milieu nursing", "ward atmosphere nursing"], "pubmed_query": "(safewards[tiab] OR \"milieu therapy\"[tiab] OR \"therapeutic milieu\"[tiab] OR \"ward atmosphere\"[tiab]) AND (nurs*[tiab] OR psychiatr*[tiab])" },
+    { "label": "open dialogue psychiatric nursing", "vault_category": "Behandlung und Therapieansätze", "terms": ["open dialogue psychiatry", "open dialogue nursing", "dialogical practice psychiatric"], "pubmed_query": "\"open dialogue\"[tiab] AND (nurs*[tiab] OR psychiatr*[tiab])" },
+    { "label": "motivational interviewing psychiatric nursing", "vault_category": "Behandlung und Therapieansätze", "terms": ["motivational interviewing psychiatric nursing", "motivational interviewing mental health nursing"], "pubmed_query": "\"Motivational Interviewing\"[MeSH] AND (psychiatr*[tiab] OR nurs*[tiab])" },
+    { "label": "mindfulness psychiatric nursing", "vault_category": "Behandlung und Therapieansätze", "terms": ["mindfulness psychiatric nursing", "mindfulness-based intervention psychiatric nursing", "MBSR psychiatric nursing"], "pubmed_query": "(mindfulness[tiab] OR \"mindfulness-based\"[tiab]) AND psychiatr*[tiab] AND nurs*[tiab]" },
+    { "label": "inpatient psychiatric nursing", "vault_category": "Pflege als Profession und Wissenschaft", "terms": ["inpatient psychiatric nursing", "acute psychiatric ward nursing", "closed ward psychiatric nursing", "psychiatric unit nursing"], "pubmed_query": "(\"Psychiatric Department, Hospital\"[MeSH] OR inpatient psychiatr*[tiab] OR acute psychiatric ward[tiab]) AND nurs*[tiab]" },
+    { "label": "community mental health nursing", "vault_category": "Pflege als Profession und Wissenschaft", "terms": ["community mental health nursing", "community psychiatric nursing", "outpatient mental health nursing"], "pubmed_query": "\"Community Mental Health Services\"[MeSH] AND nurs*[tiab]" },
+    { "label": "home treatment / crisis resolution nursing", "vault_category": "Pflege als Profession und Wissenschaft", "terms": ["home treatment mental health nursing", "crisis resolution nursing", "assertive community treatment nursing", "home-based psychiatric nursing"], "pubmed_query": "(home treatment[tiab] OR crisis resolution[tiab] OR \"assertive community treatment\"[tiab]) AND (mental health[tiab] OR psychiatr*[tiab]) AND nurs*[tiab]" },
+    { "label": "child adolescent psychiatric nursing", "vault_category": "Pflege als Profession und Wissenschaft", "terms": ["child psychiatric nursing", "adolescent psychiatric nursing", "child adolescent mental health nursing", "CAMHS nursing"], "pubmed_query": "(\"Child Psychiatry\"[MeSH] OR \"Adolescent Psychiatry\"[MeSH] OR child and adolescent mental health[tiab]) AND nurs*[tiab]" },
+    { "label": "geriatric psychiatric nursing", "vault_category": "Pflege als Profession und Wissenschaft", "terms": ["geriatric psychiatric nursing", "old age psychiatry nursing", "elderly mental health nursing", "psychogeriatric nursing"], "pubmed_query": "(\"Geriatric Psychiatry\"[MeSH] OR old age psychiatry[tiab] OR psychogeriatric*[tiab]) AND nurs*[tiab]" },
+    { "label": "perinatal mental health nursing", "vault_category": "Pflege als Profession und Wissenschaft", "terms": ["perinatal mental health nursing", "postpartum psychiatric nursing", "perinatal psychiatry nursing", "maternal mental health nursing"], "pubmed_query": "(perinatal mental health[tiab] OR postpartum psychiatr*[tiab] OR maternal mental health[tiab]) AND nurs*[tiab]" },
+    { "label": "transcultural / refugee mental health nursing", "vault_category": "Pflege als Profession und Wissenschaft", "terms": ["transcultural psychiatric nursing", "cultural competence mental health nursing", "refugee mental health nursing", "migrant mental health nursing"], "pubmed_query": "(transcultural[tiab] OR refugee*[tiab] OR migrant*[tiab] OR \"cultural competence\"[tiab]) AND mental health[tiab] AND nurs*[tiab]" },
+    { "label": "intellectual disability psychiatric nursing", "vault_category": "Pflege als Profession und Wissenschaft", "terms": ["intellectual disability psychiatric nursing", "learning disability mental health nursing"], "pubmed_query": "\"Intellectual Disability\"[MeSH] AND (psychiatr*[tiab] OR mental health[tiab]) AND nurs*[tiab]" },
+    { "label": "evidence-based psychiatric nursing", "vault_category": "Pflege als Profession und Wissenschaft", "terms": ["evidence-based psychiatric nursing", "evidence-based mental health nursing", "psychiatric nursing research"], "pubmed_query": "(evidence-based[tiab] OR \"evidence based\"[tiab]) AND \"Psychiatric Nursing\"[MeSH]" },
+    { "label": "nursing theory / models psychiatry", "vault_category": "Pflege als Profession und Wissenschaft", "terms": ["nursing theory psychiatry", "psychiatric nursing models", "tidal model nursing", "nursing conceptual framework psychiatry"], "pubmed_query": "(nursing theory[tiab] OR nursing model*[tiab] OR \"tidal model\"[tiab]) AND (psychiatr*[tiab] OR mental health[tiab])" },
+    { "label": "forensic psychiatric nursing", "vault_category": "Forensische Psychiatrie", "terms": ["forensic psychiatric nursing", "forensic mental health nursing", "secure psychiatric unit nursing", "offender mental health nursing"], "pubmed_query": "\"Forensic Psychiatry\"[MeSH] AND (nurs*[tiab] OR \"Psychiatric Nursing\"[MeSH])" },
+    { "label": "coercion / seclusion / restraint nursing", "vault_category": "Forensische Psychiatrie", "terms": ["seclusion psychiatric nursing", "restraint psychiatric nursing", "coercion psychiatry nursing", "physical restraint mental health"], "pubmed_query": "(\"Restraint, Physical\"[MeSH] OR seclusion[tiab] OR coercion[tiab] OR \"mechanical restraint\"[tiab]) AND (nurs*[tiab] OR psychiatr*[tiab])" },
+    { "label": "involuntary treatment / mental health law", "vault_category": "Forensische Psychiatrie", "terms": ["involuntary psychiatric treatment", "compulsory treatment nursing", "involuntary hospitalization mental health", "mental health law nursing"], "pubmed_query": "(involuntary[tiab] AND (treatment[tiab] OR hospitalization[tiab])) AND (psychiatr*[tiab] OR nurs*[tiab] OR mental health[tiab])" },
+    { "label": "autonomy / ethics psychiatric nursing", "vault_category": "Forensische Psychiatrie", "terms": ["autonomy psychiatric nursing", "informed consent psychiatry nursing", "ethics psychiatric nursing", "human rights psychiatric nursing"], "pubmed_query": "(autonomy[tiab] OR \"informed consent\"[tiab] OR ethics[tiab] OR \"human rights\"[tiab]) AND \"Psychiatric Nursing\"[MeSH]" },
+    { "label": "psychiatric nursing burnout / compassion fatigue", "vault_category": "Pflegende selbst", "terms": ["psychiatric nursing burnout", "compassion fatigue psychiatric nursing", "emotional exhaustion psychiatric nurses", "secondary traumatic stress nursing"], "pubmed_query": "(burnout[tiab] OR \"compassion fatigue\"[tiab] OR \"secondary traumatic stress\"[tiab]) AND (\"Psychiatric Nursing\"[MeSH] OR psychiatric nurs*[tiab])" },
+    { "label": "psychiatric nurse supervision / wellbeing", "vault_category": "Pflegende selbst", "terms": ["clinical supervision psychiatric nursing", "psychiatric nurse wellbeing", "psychiatric nurse support", "reflective practice psychiatric nursing"], "pubmed_query": "(supervision[tiab] OR wellbeing[tiab] OR well-being[tiab] OR \"reflective practice\"[tiab]) AND (\"Psychiatric Nursing\"[MeSH] OR psychiatric nurs*[tiab])" },
+    { "label": "psychiatric nursing education / training", "vault_category": "Pflegende selbst", "terms": ["psychiatric nursing education", "mental health nursing training", "psychiatric nurse competencies", "nursing preceptorship psychiatry"], "pubmed_query": "(\"Education, Nursing\"[MeSH] OR nursing education[tiab] OR nursing training[tiab] OR competenc*[tiab]) AND psychiatr*[tiab]" },
+    { "label": "psychiatric nursing workforce / staffing", "vault_category": "Pflegende selbst", "terms": ["psychiatric nursing workforce", "mental health nursing staffing", "psychiatric nurse-to-patient ratio", "mental health nursing shortage"], "pubmed_query": "(workforce[tiab] OR staffing[tiab] OR \"nurse-to-patient ratio\"[tiab] OR shortage[tiab]) AND (psychiatr*[tiab] OR mental health nurs*[tiab])" },
+    { "label": "psychiatric nursing leadership / management", "vault_category": "Pflegende selbst", "terms": ["psychiatric nursing leadership", "mental health nursing management", "nurse manager psychiatry"], "pubmed_query": "(leadership[tiab] OR management[tiab] OR \"nurse manager\"[tiab]) AND (\"Psychiatric Nursing\"[MeSH] OR psychiatric nurs*[tiab])" },
+    { "label": "moral distress / ethical stress nursing", "vault_category": "Pflegende selbst", "terms": ["moral distress psychiatric nursing", "ethical stress nursing", "moral injury nursing"], "pubmed_query": "(\"moral distress\"[tiab] OR \"moral injury\"[tiab] OR ethical stress[tiab]) AND nurs*[tiab]" }
   ]
 }
 ```
