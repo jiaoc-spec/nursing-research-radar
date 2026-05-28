@@ -18,6 +18,7 @@ import argparse
 import json
 import re
 import shutil
+import subprocess
 import sys
 import textwrap
 import time
@@ -522,6 +523,66 @@ def note_markdown(card: dict[str, Any]) -> str:
     )
 
 
+TRANSLATE_BATCH = 8  # papers per Claude call
+
+
+def _call_claude(prompt: str, timeout: int = 180) -> str:
+    result = subprocess.run(
+        ["/usr/local/bin/claude", "-p", prompt],
+        capture_output=True, text=True, timeout=timeout,
+    )
+    if result.returncode != 0:
+        raise RuntimeError(result.stderr[:200])
+    return result.stdout.strip()
+
+
+def translate_cards_to_german(cards: list[dict[str, Any]]) -> list[dict[str, Any]]:
+    """Translate summary/objective/method/result fields to German in batches."""
+    fields_to_translate = ["summary", "objective", "method", "result"]
+    results = list(cards)
+    indices_with_content = [
+        i for i, c in enumerate(cards)
+        if any(c.get(f, "").strip() for f in fields_to_translate)
+    ]
+    for batch_start in range(0, len(indices_with_content), TRANSLATE_BATCH):
+        batch_indices = indices_with_content[batch_start: batch_start + TRANSLATE_BATCH]
+        batch = []
+        for i in batch_indices:
+            c = cards[i]
+            batch.append({
+                "idx": i,
+                "title": c.get("title", ""),
+                "summary": c.get("summary", ""),
+                "objective": c.get("objective", ""),
+                "method": c.get("method", ""),
+                "result": c.get("result", ""),
+            })
+        prompt = (
+            "Du bist ein präziser medizinisch-wissenschaftlicher Übersetzer. "
+            "Übersetze die Felder summary, objective, method und result jedes Papers ins Deutsche. "
+            "Behalte Fachbegriffe, Eigennamen, Abkürzungen und Zahlen exakt. "
+            "Erfinde nichts — wenn ein Feld leer ist, lass es leer. "
+            "Antworte NUR mit einem JSON-Array (kein Markdown, keine Erklärungen):\n\n"
+            "Eingabe:\n" + json.dumps(batch, ensure_ascii=False) + "\n\n"
+            "Format der Ausgabe: "
+            '[{"idx": <zahl>, "summary": "...", "objective": "...", "method": "...", "result": "..."}, ...]'
+        )
+        try:
+            raw = _call_claude(prompt)
+            start = raw.index("[")
+            end = raw.rindex("]") + 1
+            translated = json.loads(raw[start:end])
+            for item in translated:
+                i = item["idx"]
+                for f in fields_to_translate:
+                    if item.get(f, "").strip():
+                        results[i] = dict(results[i])
+                        results[i][f] = item[f]
+        except Exception as exc:
+            print(f"  Warning: translation batch failed ({exc}); keeping English.", file=sys.stderr)
+    return results
+
+
 def build_card(paper: dict[str, Any], groups: list[dict[str, Any]], language: str, digest_label: str = "") -> dict[str, Any]:
     title = str(paper.get("title", "") or "Untitled paper").strip()
     abstract = str(paper.get("abstract", "") or "").strip()
@@ -743,9 +804,10 @@ def import_high(args: argparse.Namespace) -> None:
     seen.update(paper_key(paper) for paper in current)
     seen_titles = {normalize_title(str(paper.get("title", "") or "")) for paper in current}
 
-    imported = 0
     skipped = 0
     needs_fulltext: list[dict[str, str]] = []
+    new_cards: list[dict[str, Any]] = []
+    new_papers: list[dict[str, Any]] = []
     for paper in load_digest_papers(digest_data_dir):
         priority = str(paper.get("priority", "") or "").strip()
         if not priority_included(priority, args.priority):
@@ -793,15 +855,25 @@ def import_high(args: argparse.Namespace) -> None:
             card["readingStatus"] = "needs-fulltext"
             card["limitations"] = "Temporary card generated without full text. Do not cite method or result details until a PDF or article text is read."
 
+        seen.add(key)
+        seen_titles.add(title_key)
+        new_cards.append(card)
+        new_papers.append(paper)
+
+    # Translate abstract fields if language is German
+    effective_lang_global = args.language or "de"
+    if effective_lang_global.lower().startswith("de") and getattr(args, "translate", False) and new_cards:
+        print(f"  Translating {len(new_cards)} new card(s) to German...", file=sys.stderr)
+        new_cards = translate_cards_to_german(new_cards)
+
+    for card, paper in zip(new_cards, new_papers):
         source_path = vault_dir / card["sourcePath"].replace("./", "")
         note_path = vault_dir / card["notePath"].replace("./", "")
         write_text(source_path, source_markdown(paper))
         write_text(note_path, note_markdown(card))
         current.append(card)
-        seen.add(key)
-        seen_titles.add(title_key)
-        imported += 1
 
+    imported = len(new_cards)
     enforce_area_limit(current, args.max_areas)
     write_fulltext_inbox(vault_dir, needs_fulltext)
     save_papers(vault_dir, current)
@@ -821,6 +893,27 @@ def import_high(args: argparse.Namespace) -> None:
             "to Paper Vault. Ask the user whether they want to log in through the active browser now."
         )
     print(json.dumps(result, indent=2))
+
+
+def translate_existing(args: argparse.Namespace) -> None:
+    vault_dir = Path(args.vault_dir).resolve()
+    current = existing_papers(vault_dir)
+    if not current:
+        print(json.dumps({"translated": 0, "message": "No papers found in vault."}))
+        return
+    print(f"Translating {len(current)} papers to German...", file=sys.stderr)
+    translated = translate_cards_to_german(current)
+    # Update note files
+    notes_dir = vault_dir / "notes"
+    for card in translated:
+        note_rel = card.get("notePath", "")
+        if not note_rel:
+            continue
+        note_path = vault_dir / note_rel.replace("./", "")
+        if note_path.exists():
+            write_text(note_path, note_markdown(card))
+    save_papers(vault_dir, translated)
+    print(json.dumps({"vault_dir": str(vault_dir), "translated": len(translated)}))
 
 
 def init(args: argparse.Namespace) -> None:
@@ -849,7 +942,12 @@ def main() -> None:
     import_parser.add_argument("--keep-preprints", action=argparse.BooleanOptionalAction, default=True)
     import_parser.add_argument("--require-fulltext", action=argparse.BooleanOptionalAction, default=True)
     import_parser.add_argument("--digest-label", default="", help="Human-readable digest name stored as digestSource on each card.")
+    import_parser.add_argument("--translate", action="store_true", help="Translate abstract fields to the target language via Claude CLI.")
     import_parser.set_defaults(func=import_high)
+
+    trans_parser = sub.add_parser("translate-existing", help="Translate summary/objective/method/result fields of existing vault papers to German.")
+    trans_parser.add_argument("--vault-dir", default="paper-vault-site")
+    trans_parser.set_defaults(func=translate_existing)
 
     args = parser.parse_args()
     args.func(args)
