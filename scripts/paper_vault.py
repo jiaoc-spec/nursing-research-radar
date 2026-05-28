@@ -678,6 +678,7 @@ def build_card(paper: dict[str, Any], groups: list[dict[str, Any]], language: st
         "pdfPath": "",
         "pdfUrl": str(paper.get("pdf_url", "") or paper.get("open_access_url", "") or "").strip(),
         "digestSource": digest_label,
+        "language": lang if lang in ("de", "zh") else "en",
     }
 
 
