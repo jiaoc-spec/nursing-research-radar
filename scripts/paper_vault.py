@@ -430,10 +430,12 @@ def load_digest_papers(data_dir: Path) -> list[dict[str, Any]]:
         except Exception as exc:
             print(f"Warning: skipped {path}: {exc}", file=sys.stderr)
             continue
+        digest_language = data.get("language", "") if isinstance(data, dict) else ""
         for paper in data.get("papers", []) if isinstance(data, dict) else []:
             if isinstance(paper, dict):
                 paper = dict(paper)
                 paper["_digest_file"] = path.name
+                paper["_digest_language"] = digest_language
                 papers.append(paper)
     return papers
 
@@ -565,13 +567,24 @@ def build_card(paper: dict[str, Any], groups: list[dict[str, Any]], language: st
         result = "No abstract/full text was available; result is not available."
         limitations = "Title-level candidate only. Add a PDF or accessible full text before writing detailed notes."
 
-    if not language.lower().startswith("zh"):
-        usefulness = f"Relevant to the user's {area} theme; review against the current research question before deep reading."
-        next_action = "Open the source note or PDF. If it is central to the project, ask Codex to expand this card from the full text."
-
-    if language.lower().startswith("zh"):
+    lang = language.lower()
+    if lang.startswith("de"):
+        if not abstract:
+            summary = "Kein Abstract im Digest verfügbar. Diese Karte basiert ausschließlich auf Titel und Metadaten."
+            objective = "Kein Abstract/Volltext verfügbar; Forschungsziel nicht aus dem Titel ableitbar."
+            method = "Kein Abstract/Volltext verfügbar; Methode nicht verfügbar."
+            result = "Kein Abstract/Volltext verfügbar; Ergebnis nicht verfügbar."
+            limitations = "Nur Titelangaben vorhanden. Bitte PDF oder zugänglichen Volltext ergänzen, bevor detaillierte Notizen erstellt werden."
+        else:
+            limitations = "Erstellt aus offenen Digest-Metadaten und Abstract; Volltext vor dem Zitieren prüfen."
+        usefulness = f"Relevant für das Thema {area}; vor dem Lesen mit der aktuellen Forschungsfrage abgleichen."
+        next_action = "Quellennotiz oder PDF öffnen. Falls zentral für das Projekt, Karte mit Claude anhand des Volltexts erweitern."
+    elif lang.startswith("zh"):
         usefulness = f"与用户的 {area} 主题相关；建议结合当前研究问题判断是否需要阅读全文。"
         next_action = "先补充 PDF 或可访问全文；如果和当前研究问题直接相关，再让 Codex 基于全文补充方法、数据、结果和局限。"
+    else:
+        usefulness = f"Relevant to the user's {area} theme; review against the current research question before deep reading."
+        next_action = "Open the source note or PDF. If it is central to the project, ask Codex to expand this card from the full text."
 
     return {
         "id": paper_id,
@@ -742,7 +755,8 @@ def import_high(args: argparse.Namespace) -> None:
         if key in seen or title_key in seen_titles:
             skipped += 1
             continue
-        card = build_card(paper, groups, args.language, getattr(args, "digest_label", ""))
+        effective_lang = args.language or str(paper.get("_digest_language", "")) or "en"
+        card = build_card(paper, groups, effective_lang, getattr(args, "digest_label", ""))
         if not passes_impact_threshold(card, args.min_impact_factor, args.keep_preprints):
             skipped += 1
             continue
@@ -828,7 +842,7 @@ def main() -> None:
     import_parser.add_argument("--digest-data-dir", default="daily-literature-digests/data")
     import_parser.add_argument("--config", default="")
     import_parser.add_argument("--priority", choices=["High", "Medium", "Low"], default="High")
-    import_parser.add_argument("--language", default="en")
+    import_parser.add_argument("--language", default="", help="Output language (e.g. de, zh-CN, en). Auto-detected from digest JSON when omitted.")
     import_parser.add_argument("--download-arxiv-pdfs", action="store_true")
     import_parser.add_argument("--min-impact-factor", type=float, default=0.0)
     import_parser.add_argument("--max-areas", type=int, default=5)
