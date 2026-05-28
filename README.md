@@ -28,6 +28,7 @@ Monitors **PubMed/MEDLINE**, **Crossref**, **OpenAlex**, and **arXiv** for new p
 - Deduplicates by DOI/PMID across daily runs
 - Auto-updates daily after each digest fetch (Step 5 in run scripts)
 - Served locally via `python3 -m http.server 8766`, auto-started at login via launchd
+- **German translation**: `--translate` flag auto-translates abstract fields (summary, objective, method, result) to German via Claude CLI on import; `translate-existing` command retroactively translates all cards already in the vault
 
 ---
 
@@ -97,12 +98,15 @@ See `references/default-config.md` for the full 46-group default configuration w
 # Initialise once
 python3 scripts/paper_vault.py init --vault-dir my-vault
 
-# Import after a fetch
+# Import after a fetch (with German translation)
 python3 scripts/paper_vault.py import-high \
   --vault-dir my-vault \
   --digest-data-dir nursing-literature-digests/data \
   --config nursing-literature-digest.config.json \
-  --priority Medium --digest-label "Nursing-Digest" --no-require-fulltext
+  --priority Medium --digest-label "Nursing-Digest" --no-require-fulltext --translate
+
+# Retroactively translate all existing vault cards to German
+python3 scripts/paper_vault.py translate-existing --vault-dir my-vault
 
 # Serve locally
 cd my-vault && python3 -m http.server 8766 --bind 127.0.0.1
@@ -121,7 +125,7 @@ nursing-literature-digest/
 ├── LICENSE                           # MIT License
 ├── scripts/
 │   ├── daily_literature_digest.py    # Fetch script (PubMed, Crossref, OpenAlex, arXiv)
-│   ├── paper_vault.py                # Paper Vault builder (adapted from xuezheng627)
+│   ├── paper_vault.py                # Paper Vault builder with German translation support
 │   └── markdown_to_docx.py           # Optional DOCX export
 ├── assets/
 │   └── frontend-template/            # HTML/CSS/JS vault template with digest-tab UI
@@ -129,6 +133,24 @@ nursing-literature-digest/
 │       ├── styles.css
 │       ├── app.js
 │       └── data/
+├── config/
+│   ├── nursing-literature-digest.config.json   # Psychiatric nursing digest config
+│   ├── psychiatry-medicine-digest.config.json  # Psychiatry medicine digest config
+│   └── ki-pflege-digest.config.json            # AI nursing digest config
+├── run-scripts/
+│   ├── nursing-literature-digest-run.sh        # launchd run script — nursing digest
+│   ├── psychiatry-medicine-digest-run.sh       # launchd run script — psychiatry digest
+│   └── ki-pflege-digest-run.sh                 # launchd run script — AI nursing digest
+├── email-scripts/
+│   ├── nursing-literature-digest-email.py      # Gmail sender — nursing digest
+│   ├── psychiatry-medicine-digest-email.py     # Gmail sender — psychiatry digest
+│   └── ki-pflege-digest-email.py               # Gmail sender — AI nursing digest
+├── launchd/
+│   ├── com.nursing.literature.digest.plist     # launchd agent — nursing digest (09:00)
+│   ├── com.psychiatry.medicine.digest.plist    # launchd agent — psychiatry digest (09:00)
+│   ├── com.ki.pflege.digest.plist              # launchd agent — AI nursing digest (09:00)
+│   ├── com.nursing.paper-vault.server.plist    # launchd agent — vault HTTP server
+│   └── com.obsidian.digest.sync.plist          # launchd agent — Obsidian sync
 ├── agents/
 │   └── openai.yaml
 └── references/
