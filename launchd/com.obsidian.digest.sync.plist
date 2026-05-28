@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>Label</key>
+    <string>com.obsidian.digest.sync</string>
+
+    <key>ProgramArguments</key>
+    <array>
+        <string>/bin/bash</string>
+        <string>/Users/jiaocheng/obsidian-digest-sync.sh</string>
+    </array>
+
+    <key>WatchPaths</key>
+    <array>
+        <string>/Users/jiaocheng/nursing-literature-digests</string>
+        <string>/Users/jiaocheng/psychiatry-medicine-digests</string>
+        <string>/Users/jiaocheng/ki-pflege-digests</string>
+    </array>
+
+    <key>RunAtLoad</key>
+    <true/>
+
+    <key>StandardOutPath</key>
+    <string>/Users/jiaocheng/obsidian-digest-sync.out.log</string>
+    <key>StandardErrorPath</key>
+    <string>/Users/jiaocheng/obsidian-digest-sync.err.log</string>
+
+    <key>EnvironmentVariables</key>
+    <dict>
+        <key>PATH</key>
+        <string>/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin</string>
+        <key>HOME</key>
+        <string>/Users/jiaocheng</string>
+    </dict>
+</dict>
+</plist>
