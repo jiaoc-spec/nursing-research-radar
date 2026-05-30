@@ -1,4 +1,0 @@
-interface:
-  display_name: "Nursing Literature Digest"
-  short_description: "Set up daily AI nursing and psychiatric nursing literature digests from research keywords."
-  default_prompt: "Use $nursing-literature-digest to create a daily AI nursing literature digest automation for my psychiatric nursing research keywords."

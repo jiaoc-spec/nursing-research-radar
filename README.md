@@ -23,7 +23,7 @@ Monitors **PubMed/MEDLINE**, **Crossref**, **OpenAlex**, and **arXiv** for new p
 **Paper Vault** *(integrated from [research-radar-paper-vault](https://github.com/xuezheng627/research-radar-paper-vault) by xuezheng627)*
 - Imports High and Medium priority papers into a local static web dashboard
 - Groups papers by Digest → Vault Category → Paper with tab navigation
-- Supports multiple digests in one vault
+- Can be combined with other digest skills in a shared vault
 - Searchable card view with title, summary, method, result, and next-action fields
 - Deduplicates by DOI/PMID across daily runs
 - Auto-updates daily after each digest fetch (Step 5 in run scripts)
@@ -143,8 +143,6 @@ nursing-literature-digest/
 │   ├── com.nursing.literature.digest.plist     # launchd agent — nursing digest (09:00)
 │   ├── com.nursing.paper-vault.server.plist    # launchd agent — vault HTTP server
 │   └── com.obsidian.digest.sync.plist          # launchd agent — Obsidian sync
-├── agents/
-│   └── openai.yaml
 └── references/
     └── default-config.md             # Full 46-group keyword config with vault_category
 ```
