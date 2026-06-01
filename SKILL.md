@@ -30,7 +30,7 @@ Frontend template for the vault lives in `assets/frontend-template/`.
 1. Confirm or infer the user's settings:
    - Recipient email for the digest.
    - Research keywords, grouped by theme. Each group may have a `vault_category` to control how papers appear in the vault (separate from PubMed search granularity).
-   - Language: ask if unclear; default to `zh-CN`.
+   - Language: ask if unclear; default to `auto`. `auto` detects the operating-system locale and resolves it to a digest language. Explicit values such as `de`, `en`, or `zh-CN` must be preserved and must not trigger auto-detection.
    - Timezone: ask if unclear; otherwise use the user's local timezone.
    - Schedule time: default to `09:00`.
    - Sources: PubMed is always on; Crossref defaults to Elsevier, Springer Nature, Wiley, and Taylor & Francis; arXiv is on by default.
@@ -41,7 +41,7 @@ Frontend template for the vault lives in `assets/frontend-template/`.
      "recipient_email": "user@example.com",
      "crossref_mailto": "user@example.com",
      "ncbi_email": "user@example.com",
-     "language": "zh-CN",
+     "language": "auto",
      "timezone": "Europe/Berlin",
      "schedule_time": "09:00",
      "output_dir": "nursing-literature-digests",
@@ -144,6 +144,7 @@ Group papers by priority using `##` section headings, then give each paper a `##
 - The `###` heading uses a short descriptive German title (translated/paraphrased from the original), not a literal word-for-word translation.
 - The original English title follows immediately as `**Titel:**` field below the heading.
 - If the digest language is not German, use the configured language for the short heading title instead.
+- If `language` is `auto`, use the resolved language from the fetch JSON's `language` field, not the literal word `auto`.
 
 ## Paper Vault
 

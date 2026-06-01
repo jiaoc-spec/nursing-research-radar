@@ -24,7 +24,7 @@ Use these defaults when the user asks for a starter daily nursing literature dig
   "recipient_email": "user@example.com",
   "crossref_mailto": "user@example.com",
   "ncbi_email": "user@example.com",
-  "language": "zh-CN",
+  "language": "auto",
   "timezone": "Europe/Berlin",
   "schedule_time": "09:00",
   "output_dir": "nursing-literature-digests",

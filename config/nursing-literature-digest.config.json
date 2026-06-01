@@ -2,7 +2,7 @@
   "recipient_email": "caslinjiao@gmail.com",
   "crossref_mailto": "caslinjiao@gmail.com",
   "ncbi_email": "caslinjiao@gmail.com",
-  "language": "de",
+  "language": "auto",
   "timezone": "Europe/Berlin",
   "schedule_time": "09:00",
   "output_dir": "/Users/jiaocheng/nursing-literature-digests",

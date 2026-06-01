@@ -69,7 +69,7 @@ During setup, Claude creates a `nursing-literature-digest.config.json` in your w
 | Field | Description | Default |
 |---|---|---|
 | `recipient_email` | Where the digest is sent | — |
-| `language` | Digest language (`zh-CN`, `de`, `en`, …) | `zh-CN` |
+| `language` | Digest language (`auto`, `zh-CN`, `de`, `en`, …) | `auto` |
 | `timezone` | Your local timezone | ask |
 | `schedule_time` | Daily run time | `09:00` |
 | `output_dir` | Local archive folder | `nursing-literature-digests` |
@@ -89,6 +89,29 @@ Each keyword group can include a `vault_category` field to control how papers ar
 ```
 
 See `references/default-config.md` for the full 46-group default configuration with 5 vault categories.
+
+### Language auto-detection
+
+Set `"language": "auto"` to let the fetch script detect the operating-system locale and write the resolved digest language into the JSON payload. Explicit values keep the old behavior: `"language": "de"`, `"language": "en"`, or `"language": "zh-CN"` are used as-is and do not trigger locale detection.
+
+Common mappings:
+
+| OS locale | Digest language |
+|---|---|
+| `de_DE`, `de-DE` | `de` |
+| `en_US`, `en-GB` | `en` |
+| `zh_CN`, `zh-Hans` | `zh-CN` |
+| `zh_Hant`, `zh-TW` | `zh-TW` |
+| `fr_FR` | `fr` |
+| `ja_JP` | `ja` |
+
+If locale detection fails or the locale is unsupported, the script falls back to `en`. The run log includes the selected mode, detected locale, and final digest language, for example:
+
+```text
+Language mode: auto
+Detected locale: de_DE
+Selected digest language: de
+```
 
 ---
 

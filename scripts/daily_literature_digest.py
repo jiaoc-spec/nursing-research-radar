@@ -15,6 +15,8 @@ import argparse
 import datetime as dt
 import html
 import json
+import locale
+import os
 import re
 import sys
 import time
@@ -29,11 +31,35 @@ from typing import Any
 RECIPIENT_EMAIL = ""
 CROSSREF_MAILTO = ""
 NCBI_EMAIL = ""
-LANGUAGE = "zh-CN"
+LANGUAGE = "auto"
+LANGUAGE_MODE = "auto"
+DETECTED_LOCALE = ""
 TIMEZONE = ""
 SCHEDULE_TIME = "09:00"
 DEFAULT_OUTPUT_DIR = Path("nursing-literature-digests")
 DEFAULT_STATE_FILE = DEFAULT_OUTPUT_DIR / "state.json"
+
+LOCALE_LANGUAGE_MAP = {
+    "de-de": "de",
+    "de-at": "de",
+    "de-ch": "de",
+    "en-us": "en",
+    "en-gb": "en",
+    "en-au": "en",
+    "en-ca": "en",
+    "zh-cn": "zh-CN",
+    "zh-sg": "zh-CN",
+    "zh-hans": "zh-CN",
+    "zh-hans-cn": "zh-CN",
+    "zh-tw": "zh-TW",
+    "zh-hk": "zh-TW",
+    "zh-mo": "zh-TW",
+    "zh-hant": "zh-TW",
+    "zh-hant-tw": "zh-TW",
+    "fr-fr": "fr",
+    "fr-ca": "fr",
+    "ja-jp": "ja",
+}
 
 PUBLISHERS = [
     {
@@ -684,6 +710,71 @@ def read_config(path_value: str | None) -> dict[str, Any]:
     return read_json(path, {})
 
 
+def normalize_locale_name(value: str | None) -> str:
+    text = clean_text(value)
+    if not text:
+        return ""
+    text = text.split(":", 1)[0].split(".", 1)[0].split("@", 1)[0]
+    text = text.replace("_", "-").strip()
+    if text.lower() in {"c", "posix", "utf-8"}:
+        return ""
+    return text
+
+
+def detect_os_locale() -> str:
+    candidates: list[str] = []
+    for env_key in ("LC_ALL", "LC_MESSAGES", "LANGUAGE", "LANG"):
+        value = os.environ.get(env_key)
+        if value:
+            candidates.append(value)
+    for category in (locale.LC_CTYPE, locale.LC_TIME):
+        try:
+            language, encoding = locale.getlocale(category)
+            if language:
+                candidates.append(language)
+            current = locale.setlocale(category, None)
+            if current:
+                candidates.append(current)
+        except (TypeError, ValueError, locale.Error):
+            continue
+    for candidate in candidates:
+        normalized = normalize_locale_name(candidate)
+        if normalized:
+            return normalized
+    return ""
+
+
+def language_from_locale(locale_name: str) -> str:
+    normalized = normalize_locale_name(locale_name)
+    if not normalized:
+        return ""
+    key = normalized.lower()
+    if key in LOCALE_LANGUAGE_MAP:
+        return LOCALE_LANGUAGE_MAP[key]
+    if key.startswith("zh-hant") or key in {"zh-tw", "zh-hk", "zh-mo"}:
+        return "zh-TW"
+    if key.startswith("zh-hans") or key.startswith("zh-cn") or key.startswith("zh-sg") or key == "zh":
+        return "zh-CN"
+    base = key.split("-", 1)[0]
+    if base in {"de", "en", "fr", "ja"}:
+        return base
+    return ""
+
+
+def resolve_language(language_value: str | None) -> tuple[str, str, str]:
+    requested = clean_text(language_value) or "auto"
+    if requested.lower() != "auto":
+        return "explicit", "", requested
+    detected = detect_os_locale()
+    return "auto", detected, language_from_locale(detected) or "en"
+
+
+def log_language_selection() -> None:
+    print(f"Language mode: {LANGUAGE_MODE}", file=sys.stderr)
+    print(f"Detected locale: {DETECTED_LOCALE or 'unavailable'}", file=sys.stderr)
+    print(f"Selected digest language: {LANGUAGE}", file=sys.stderr)
+
+
 def int_setting(cli_value: int | None, config: dict[str, Any], key: str, default: int) -> int:
     if cli_value is not None:
         return cli_value
@@ -704,13 +795,14 @@ def float_setting(cli_value: float | None, config: dict[str, Any], key: str, def
 
 def apply_runtime_config(args: argparse.Namespace) -> None:
     config = read_config(getattr(args, "config", None))
-    global RECIPIENT_EMAIL, CROSSREF_MAILTO, NCBI_EMAIL, LANGUAGE, TIMEZONE, SCHEDULE_TIME, PUBLISHERS, KEYWORD_GROUPS
+    global RECIPIENT_EMAIL, CROSSREF_MAILTO, NCBI_EMAIL, LANGUAGE, LANGUAGE_MODE, DETECTED_LOCALE, TIMEZONE, SCHEDULE_TIME, PUBLISHERS, KEYWORD_GROUPS
     RECIPIENT_EMAIL = clean_text(config.get("recipient_email"))
     CROSSREF_MAILTO = clean_text(config.get("crossref_mailto")) or RECIPIENT_EMAIL
     NCBI_EMAIL = clean_text(config.get("ncbi_email")) or CROSSREF_MAILTO
-    LANGUAGE = clean_text(config.get("language")) or LANGUAGE
+    LANGUAGE_MODE, DETECTED_LOCALE, LANGUAGE = resolve_language(config.get("language") or LANGUAGE)
     TIMEZONE = clean_text(config.get("timezone")) or TIMEZONE
     SCHEDULE_TIME = clean_text(config.get("schedule_time")) or SCHEDULE_TIME
+    log_language_selection()
 
     configured_groups = configured_keyword_groups(config.get("keyword_groups"))
     if configured_groups:
@@ -1577,6 +1669,8 @@ def fetch_candidates(args: argparse.Namespace) -> Path:
         "created_utc": now.isoformat(),
         "recipient_email": RECIPIENT_EMAIL,
         "language": LANGUAGE,
+        "language_mode": LANGUAGE_MODE,
+        "detected_locale": DETECTED_LOCALE,
         "timezone": TIMEZONE,
         "schedule_time": SCHEDULE_TIME,
         "window_from_utc": window_from.isoformat(),
