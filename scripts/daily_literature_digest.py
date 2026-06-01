@@ -1,6 +1,9 @@
 #!/usr/bin/env python3
 """Fetch daily nursing literature candidates for Claude-authored digest summaries.
 
+Adapted from daily-literature-digest-skill by xuezheng627.
+Source: https://github.com/xuezheng627/daily-literature-digest-skill
+
 This script intentionally does not call an LLM. It gathers open metadata and
 abstracts from PubMed/MEDLINE, Crossref, OpenAlex, and arXiv, then writes a
 JSON payload for a Codex automation to summarize.
