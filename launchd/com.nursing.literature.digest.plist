@@ -8,7 +8,7 @@
     <key>ProgramArguments</key>
     <array>
         <string>/bin/bash</string>
-        <string>/Users/jiaocheng/nursing-literature-digest-run.sh</string>
+        <string>/path/to/nursing-literature-digest-run.sh</string>
     </array>
 
     <key>StartCalendarInterval</key>
@@ -20,9 +20,9 @@
     </dict>
 
     <key>StandardOutPath</key>
-    <string>/Users/jiaocheng/nursing-literature-digests/launchd.log</string>
+    <string>/path/to/nursing-literature-digests/launchd.log</string>
     <key>StandardErrorPath</key>
-    <string>/Users/jiaocheng/nursing-literature-digests/launchd-error.log</string>
+    <string>/path/to/nursing-literature-digests/launchd-error.log</string>
 
     <key>RunAtLoad</key>
     <false/>
@@ -32,7 +32,7 @@
         <key>PATH</key>
         <string>/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin</string>
         <key>HOME</key>
-        <string>/Users/jiaocheng</string>
+        <string>/path/to/home</string>
     </dict>
 </dict>
 </plist>

@@ -97,10 +97,10 @@ PUBLISHERS = [
 ]
 
 KEYWORD_GROUPS: list[dict[str, Any]] = [
-    # ── Psychische Erkrankungen und Diagnostik ────────────────────────────────
+    # ── Mental disorders and diagnostics ────────────────────────────────
     {
         "label": "schizophrenia / psychosis nursing",
-        "vault_category": "Psychische Erkrankungen und Diagnostik",
+        "vault_category": "Mental disorders and diagnostics",
         "terms": [
             "schizophrenia nursing",
             "psychosis nursing",
@@ -113,7 +113,7 @@ KEYWORD_GROUPS: list[dict[str, Any]] = [
     },
     {
         "label": "borderline personality disorder",
-        "vault_category": "Psychische Erkrankungen und Diagnostik",
+        "vault_category": "Mental disorders and diagnostics",
         "terms": [
             "borderline personality disorder",
             "emotionally unstable personality disorder",
@@ -124,7 +124,7 @@ KEYWORD_GROUPS: list[dict[str, Any]] = [
     },
     {
         "label": "bipolar disorder nursing",
-        "vault_category": "Psychische Erkrankungen und Diagnostik",
+        "vault_category": "Mental disorders and diagnostics",
         "terms": [
             "bipolar disorder nursing",
             "bipolar disorder care nursing",
@@ -136,7 +136,7 @@ KEYWORD_GROUPS: list[dict[str, Any]] = [
     },
     {
         "label": "major depression nursing",
-        "vault_category": "Psychische Erkrankungen und Diagnostik",
+        "vault_category": "Mental disorders and diagnostics",
         "terms": [
             "depression nursing",
             "major depressive disorder nursing",
@@ -147,7 +147,7 @@ KEYWORD_GROUPS: list[dict[str, Any]] = [
     },
     {
         "label": "anxiety disorders nursing",
-        "vault_category": "Psychische Erkrankungen und Diagnostik",
+        "vault_category": "Mental disorders and diagnostics",
         "terms": [
             "anxiety disorders nursing",
             "anxiety nursing care",
@@ -159,7 +159,7 @@ KEYWORD_GROUPS: list[dict[str, Any]] = [
     },
     {
         "label": "OCD nursing",
-        "vault_category": "Psychische Erkrankungen und Diagnostik",
+        "vault_category": "Mental disorders and diagnostics",
         "terms": [
             "OCD nursing",
             "obsessive-compulsive disorder nursing",
@@ -169,7 +169,7 @@ KEYWORD_GROUPS: list[dict[str, Any]] = [
     },
     {
         "label": "eating disorders nursing",
-        "vault_category": "Psychische Erkrankungen und Diagnostik",
+        "vault_category": "Mental disorders and diagnostics",
         "terms": [
             "eating disorders nursing",
             "anorexia nervosa nursing",
@@ -180,7 +180,7 @@ KEYWORD_GROUPS: list[dict[str, Any]] = [
     },
     {
         "label": "PTSD / trauma nursing",
-        "vault_category": "Psychische Erkrankungen und Diagnostik",
+        "vault_category": "Mental disorders and diagnostics",
         "terms": [
             "PTSD nursing",
             "post-traumatic stress disorder nursing",
@@ -191,7 +191,7 @@ KEYWORD_GROUPS: list[dict[str, Any]] = [
     },
     {
         "label": "substance use disorders nursing",
-        "vault_category": "Psychische Erkrankungen und Diagnostik",
+        "vault_category": "Mental disorders and diagnostics",
         "terms": [
             "substance use disorder nursing",
             "addiction nursing",
@@ -203,7 +203,7 @@ KEYWORD_GROUPS: list[dict[str, Any]] = [
     },
     {
         "label": "dual diagnosis / comorbidity nursing",
-        "vault_category": "Psychische Erkrankungen und Diagnostik",
+        "vault_category": "Mental disorders and diagnostics",
         "terms": [
             "dual diagnosis nursing",
             "comorbidity mental health nursing",
@@ -214,7 +214,7 @@ KEYWORD_GROUPS: list[dict[str, Any]] = [
     },
     {
         "label": "dementia psychiatric nursing",
-        "vault_category": "Psychische Erkrankungen und Diagnostik",
+        "vault_category": "Mental disorders and diagnostics",
         "terms": [
             "dementia nursing psychiatric",
             "dementia behavioural symptoms nursing",
@@ -225,7 +225,7 @@ KEYWORD_GROUPS: list[dict[str, Any]] = [
     },
     {
         "label": "ADHD nursing",
-        "vault_category": "Psychische Erkrankungen und Diagnostik",
+        "vault_category": "Mental disorders and diagnostics",
         "terms": [
             "ADHD nursing",
             "attention deficit hyperactivity disorder nursing",
@@ -235,7 +235,7 @@ KEYWORD_GROUPS: list[dict[str, Any]] = [
     },
     {
         "label": "autism spectrum disorder nursing",
-        "vault_category": "Psychische Erkrankungen und Diagnostik",
+        "vault_category": "Mental disorders and diagnostics",
         "terms": [
             "autism spectrum disorder nursing",
             "ASD nursing",
@@ -245,7 +245,7 @@ KEYWORD_GROUPS: list[dict[str, Any]] = [
     },
     {
         "label": "personality disorders nursing",
-        "vault_category": "Psychische Erkrankungen und Diagnostik",
+        "vault_category": "Mental disorders and diagnostics",
         "terms": [
             "personality disorders nursing",
             "personality disorder nursing care",
@@ -254,10 +254,10 @@ KEYWORD_GROUPS: list[dict[str, Any]] = [
         ],
         "pubmed_query": '"Personality Disorders"[MeSH] AND (nurs*[tiab] OR "Psychiatric Nursing"[MeSH])',
     },
-    # ── Behandlung und Therapieansätze ────────────────────────────────────────
+    # ── Treatment and interventions ────────────────────────────────────────
     {
         "label": "dialectical behavior therapy",
-        "vault_category": "Behandlung und Therapieansätze",
+        "vault_category": "Treatment and interventions",
         "terms": [
             "dialectical behavior therapy",
             "dialectical behaviour therapy",
@@ -269,7 +269,7 @@ KEYWORD_GROUPS: list[dict[str, Any]] = [
     },
     {
         "label": "trauma-informed care nursing",
-        "vault_category": "Behandlung und Therapieansätze",
+        "vault_category": "Treatment and interventions",
         "terms": [
             "trauma-informed care",
             "trauma-informed nursing",
@@ -280,7 +280,7 @@ KEYWORD_GROUPS: list[dict[str, Any]] = [
     },
     {
         "label": "therapeutic relationship / communication",
-        "vault_category": "Behandlung und Therapieansätze",
+        "vault_category": "Treatment and interventions",
         "terms": [
             "therapeutic relationship nursing",
             "therapeutic communication nursing",
@@ -292,7 +292,7 @@ KEYWORD_GROUPS: list[dict[str, Any]] = [
     },
     {
         "label": "psychoeducation nursing",
-        "vault_category": "Behandlung und Therapieansätze",
+        "vault_category": "Treatment and interventions",
         "terms": [
             "psychoeducation nursing",
             "psychiatric patient education",
@@ -302,7 +302,7 @@ KEYWORD_GROUPS: list[dict[str, Any]] = [
     },
     {
         "label": "recovery-oriented care nursing",
-        "vault_category": "Behandlung und Therapieansätze",
+        "vault_category": "Treatment and interventions",
         "terms": [
             "recovery-oriented care nursing",
             "recovery approach psychiatry",
@@ -313,7 +313,7 @@ KEYWORD_GROUPS: list[dict[str, Any]] = [
     },
     {
         "label": "de-escalation / aggression management psychiatric",
-        "vault_category": "Behandlung und Therapieansätze",
+        "vault_category": "Treatment and interventions",
         "terms": [
             "de-escalation psychiatric",
             "aggression management psychiatric nursing",
@@ -324,7 +324,7 @@ KEYWORD_GROUPS: list[dict[str, Any]] = [
     },
     {
         "label": "family interventions psychiatric nursing",
-        "vault_category": "Behandlung und Therapieansätze",
+        "vault_category": "Treatment and interventions",
         "terms": [
             "family intervention psychiatric nursing",
             "family therapy psychiatric nursing",
@@ -335,7 +335,7 @@ KEYWORD_GROUPS: list[dict[str, Any]] = [
     },
     {
         "label": "early intervention psychosis nursing",
-        "vault_category": "Behandlung und Therapieansätze",
+        "vault_category": "Treatment and interventions",
         "terms": [
             "early intervention psychosis nursing",
             "first episode psychosis nursing",
@@ -345,7 +345,7 @@ KEYWORD_GROUPS: list[dict[str, Any]] = [
     },
     {
         "label": "safewards / milieu therapy",
-        "vault_category": "Behandlung und Therapieansätze",
+        "vault_category": "Treatment and interventions",
         "terms": [
             "safewards",
             "milieu therapy psychiatric",
@@ -356,7 +356,7 @@ KEYWORD_GROUPS: list[dict[str, Any]] = [
     },
     {
         "label": "open dialogue psychiatric nursing",
-        "vault_category": "Behandlung und Therapieansätze",
+        "vault_category": "Treatment and interventions",
         "terms": [
             "open dialogue psychiatry",
             "open dialogue nursing",
@@ -366,7 +366,7 @@ KEYWORD_GROUPS: list[dict[str, Any]] = [
     },
     {
         "label": "motivational interviewing psychiatric nursing",
-        "vault_category": "Behandlung und Therapieansätze",
+        "vault_category": "Treatment and interventions",
         "terms": [
             "motivational interviewing psychiatric nursing",
             "motivational interviewing mental health nursing",
@@ -375,7 +375,7 @@ KEYWORD_GROUPS: list[dict[str, Any]] = [
     },
     {
         "label": "mindfulness psychiatric nursing",
-        "vault_category": "Behandlung und Therapieansätze",
+        "vault_category": "Treatment and interventions",
         "terms": [
             "mindfulness psychiatric nursing",
             "mindfulness-based intervention psychiatric nursing",
@@ -383,10 +383,10 @@ KEYWORD_GROUPS: list[dict[str, Any]] = [
         ],
         "pubmed_query": '(mindfulness[tiab] OR "mindfulness-based"[tiab]) AND psychiatr*[tiab] AND nurs*[tiab]',
     },
-    # ── Pflege als Profession und Wissenschaft ────────────────────────────────
+    # ── Nursing profession and science ────────────────────────────────
     {
         "label": "inpatient psychiatric nursing",
-        "vault_category": "Pflege als Profession und Wissenschaft",
+        "vault_category": "Nursing profession and science",
         "terms": [
             "inpatient psychiatric nursing",
             "acute psychiatric ward nursing",
@@ -397,7 +397,7 @@ KEYWORD_GROUPS: list[dict[str, Any]] = [
     },
     {
         "label": "community mental health nursing",
-        "vault_category": "Pflege als Profession und Wissenschaft",
+        "vault_category": "Nursing profession and science",
         "terms": [
             "community mental health nursing",
             "community psychiatric nursing",
@@ -407,7 +407,7 @@ KEYWORD_GROUPS: list[dict[str, Any]] = [
     },
     {
         "label": "home treatment / crisis resolution nursing",
-        "vault_category": "Pflege als Profession und Wissenschaft",
+        "vault_category": "Nursing profession and science",
         "terms": [
             "home treatment mental health nursing",
             "crisis resolution nursing",
@@ -418,7 +418,7 @@ KEYWORD_GROUPS: list[dict[str, Any]] = [
     },
     {
         "label": "child adolescent psychiatric nursing",
-        "vault_category": "Pflege als Profession und Wissenschaft",
+        "vault_category": "Nursing profession and science",
         "terms": [
             "child psychiatric nursing",
             "adolescent psychiatric nursing",
@@ -429,7 +429,7 @@ KEYWORD_GROUPS: list[dict[str, Any]] = [
     },
     {
         "label": "geriatric psychiatric nursing",
-        "vault_category": "Pflege als Profession und Wissenschaft",
+        "vault_category": "Nursing profession and science",
         "terms": [
             "geriatric psychiatric nursing",
             "old age psychiatry nursing",
@@ -440,7 +440,7 @@ KEYWORD_GROUPS: list[dict[str, Any]] = [
     },
     {
         "label": "perinatal mental health nursing",
-        "vault_category": "Pflege als Profession und Wissenschaft",
+        "vault_category": "Nursing profession and science",
         "terms": [
             "perinatal mental health nursing",
             "postpartum psychiatric nursing",
@@ -451,7 +451,7 @@ KEYWORD_GROUPS: list[dict[str, Any]] = [
     },
     {
         "label": "transcultural / refugee mental health nursing",
-        "vault_category": "Pflege als Profession und Wissenschaft",
+        "vault_category": "Nursing profession and science",
         "terms": [
             "transcultural psychiatric nursing",
             "cultural competence mental health nursing",
@@ -462,7 +462,7 @@ KEYWORD_GROUPS: list[dict[str, Any]] = [
     },
     {
         "label": "intellectual disability psychiatric nursing",
-        "vault_category": "Pflege als Profession und Wissenschaft",
+        "vault_category": "Nursing profession and science",
         "terms": [
             "intellectual disability psychiatric nursing",
             "learning disability mental health nursing",
@@ -472,7 +472,7 @@ KEYWORD_GROUPS: list[dict[str, Any]] = [
     },
     {
         "label": "evidence-based psychiatric nursing",
-        "vault_category": "Pflege als Profession und Wissenschaft",
+        "vault_category": "Nursing profession and science",
         "terms": [
             "evidence-based psychiatric nursing",
             "evidence-based mental health nursing",
@@ -482,7 +482,7 @@ KEYWORD_GROUPS: list[dict[str, Any]] = [
     },
     {
         "label": "nursing theory / models psychiatry",
-        "vault_category": "Pflege als Profession und Wissenschaft",
+        "vault_category": "Nursing profession and science",
         "terms": [
             "nursing theory psychiatry",
             "psychiatric nursing models",
@@ -491,10 +491,10 @@ KEYWORD_GROUPS: list[dict[str, Any]] = [
         ],
         "pubmed_query": '(nursing theory[tiab] OR nursing model*[tiab] OR "tidal model"[tiab] OR nursing conceptual framework[tiab]) AND (psychiatr*[tiab] OR mental health[tiab])',
     },
-    # ── Forensische Psychiatrie ───────────────────────────────────────────────
+    # ── Forensic psychiatry ───────────────────────────────────────────────
     {
         "label": "forensic psychiatric nursing",
-        "vault_category": "Forensische Psychiatrie",
+        "vault_category": "Forensic psychiatry",
         "terms": [
             "forensic psychiatric nursing",
             "forensic mental health nursing",
@@ -505,7 +505,7 @@ KEYWORD_GROUPS: list[dict[str, Any]] = [
     },
     {
         "label": "coercion / seclusion / restraint nursing",
-        "vault_category": "Forensische Psychiatrie",
+        "vault_category": "Forensic psychiatry",
         "terms": [
             "seclusion psychiatric nursing",
             "restraint psychiatric nursing",
@@ -516,7 +516,7 @@ KEYWORD_GROUPS: list[dict[str, Any]] = [
     },
     {
         "label": "involuntary treatment / mental health law",
-        "vault_category": "Forensische Psychiatrie",
+        "vault_category": "Forensic psychiatry",
         "terms": [
             "involuntary psychiatric treatment",
             "compulsory treatment nursing",
@@ -527,7 +527,7 @@ KEYWORD_GROUPS: list[dict[str, Any]] = [
     },
     {
         "label": "autonomy / ethics psychiatric nursing",
-        "vault_category": "Forensische Psychiatrie",
+        "vault_category": "Forensic psychiatry",
         "terms": [
             "autonomy psychiatric nursing",
             "informed consent psychiatry nursing",
@@ -536,10 +536,10 @@ KEYWORD_GROUPS: list[dict[str, Any]] = [
         ],
         "pubmed_query": '(autonomy[tiab] OR "informed consent"[tiab] OR ethics[tiab] OR "human rights"[tiab]) AND "Psychiatric Nursing"[MeSH]',
     },
-    # ── Pflegende selbst ──────────────────────────────────────────────────────
+    # ── Nurses themselves ──────────────────────────────────────────────────────
     {
         "label": "psychiatric nursing burnout / compassion fatigue",
-        "vault_category": "Pflegende selbst",
+        "vault_category": "Nurses themselves",
         "terms": [
             "psychiatric nursing burnout",
             "compassion fatigue psychiatric nursing",
@@ -550,7 +550,7 @@ KEYWORD_GROUPS: list[dict[str, Any]] = [
     },
     {
         "label": "psychiatric nurse supervision / wellbeing",
-        "vault_category": "Pflegende selbst",
+        "vault_category": "Nurses themselves",
         "terms": [
             "clinical supervision psychiatric nursing",
             "psychiatric nurse wellbeing",
@@ -561,7 +561,7 @@ KEYWORD_GROUPS: list[dict[str, Any]] = [
     },
     {
         "label": "psychiatric nursing education / training",
-        "vault_category": "Pflegende selbst",
+        "vault_category": "Nurses themselves",
         "terms": [
             "psychiatric nursing education",
             "mental health nursing training",
@@ -572,7 +572,7 @@ KEYWORD_GROUPS: list[dict[str, Any]] = [
     },
     {
         "label": "psychiatric nursing workforce / staffing",
-        "vault_category": "Pflegende selbst",
+        "vault_category": "Nurses themselves",
         "terms": [
             "psychiatric nursing workforce",
             "mental health nursing staffing",
@@ -583,7 +583,7 @@ KEYWORD_GROUPS: list[dict[str, Any]] = [
     },
     {
         "label": "psychiatric nursing leadership / management",
-        "vault_category": "Pflegende selbst",
+        "vault_category": "Nurses themselves",
         "terms": [
             "psychiatric nursing leadership",
             "mental health nursing management",
@@ -593,7 +593,7 @@ KEYWORD_GROUPS: list[dict[str, Any]] = [
     },
     {
         "label": "moral distress / ethical stress nursing",
-        "vault_category": "Pflegende selbst",
+        "vault_category": "Nurses themselves",
         "terms": [
             "moral distress psychiatric nursing",
             "ethical stress nursing",

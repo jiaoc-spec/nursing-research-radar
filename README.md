@@ -28,7 +28,7 @@ Monitors **PubMed/MEDLINE**, **Crossref**, **OpenAlex**, and **arXiv** for new p
 - Deduplicates by DOI/PMID across daily runs
 - Auto-updates daily after each digest fetch (Step 5 in run scripts)
 - Served locally via `python3 -m http.server 8766`, auto-started at login via launchd
-- **German translation**: `--translate` flag auto-translates abstract fields (summary, objective, method, result) to German via Claude CLI on import; `translate-existing` command retroactively translates all cards already in the vault
+- Language-aware output: digest generation follows the resolved `language` value from the fetch JSON. Paper Vault translation support is optional and should be configured per local setup.
 
 ---
 
@@ -82,7 +82,7 @@ Each keyword group can include a `vault_category` field to control how papers ar
 ```json
 {
   "label": "dialectical behavior therapy",
-  "vault_category": "Behandlung und Therapieansätze",
+  "vault_category": "Treatment and interventions",
   "terms": ["dialectical behavior therapy", "DBT skills training"],
   "pubmed_query": "\"Dialectical Behavior Therapy\"[MeSH Terms] OR ..."
 }
@@ -113,6 +113,12 @@ Detected locale: de_DE
 Selected digest language: de
 ```
 
+### Public vs. private/local configuration
+
+This repository is intended to stay publishable and reusable. Do not commit personal email addresses, Gmail app passwords, private run scripts, or local digest outputs. Keep private setups in untracked files such as `*.local.json`, `*.local.sh`, `.env`, or a directory outside the repository.
+
+For example, a public configuration can keep `"language": "auto"`, while a private local configuration may set `"language": "de"` and contain the owner's personal email settings.
+
 ---
 
 ## Paper Vault quick start
@@ -121,15 +127,12 @@ Selected digest language: de
 # Initialise once
 python3 scripts/paper_vault.py init --vault-dir my-vault
 
-# Import after a fetch (with German translation)
+# Import after a fetch
 python3 scripts/paper_vault.py import-high \
   --vault-dir my-vault \
   --digest-data-dir nursing-literature-digests/data \
   --config nursing-literature-digest.config.json \
-  --priority Medium --digest-label "Nursing-Digest" --no-require-fulltext --translate
-
-# Retroactively translate all existing vault cards to German
-python3 scripts/paper_vault.py translate-existing --vault-dir my-vault
+  --priority Medium --digest-label "Nursing-Digest" --no-require-fulltext
 
 # Serve locally
 cd my-vault && python3 -m http.server 8766 --bind 127.0.0.1
@@ -148,7 +151,7 @@ nursing-literature-digest/
 ├── LICENSE                           # MIT License
 ├── scripts/
 │   ├── daily_literature_digest.py    # Fetch script (PubMed, Crossref, OpenAlex, arXiv)
-│   ├── paper_vault.py                # Paper Vault builder with German translation support
+│   ├── paper_vault.py                # Paper Vault builder
 │   └── markdown_to_docx.py           # Optional DOCX export
 ├── assets/
 │   └── frontend-template/            # HTML/CSS/JS vault template with digest-tab UI

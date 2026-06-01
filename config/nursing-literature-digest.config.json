@@ -1,11 +1,11 @@
 {
-  "recipient_email": "caslinjiao@gmail.com",
-  "crossref_mailto": "caslinjiao@gmail.com",
-  "ncbi_email": "caslinjiao@gmail.com",
+  "recipient_email": "user@example.com",
+  "crossref_mailto": "user@example.com",
+  "ncbi_email": "user@example.com",
   "language": "auto",
   "timezone": "Europe/Berlin",
   "schedule_time": "09:00",
-  "output_dir": "/Users/jiaocheng/nursing-literature-digests",
+  "output_dir": "nursing-literature-digests",
   "include_pubmed": true,
   "include_arxiv": true,
   "rows": 5,
@@ -17,7 +17,7 @@
   "keyword_groups": [
     {
       "label": "schizophrenia / psychosis nursing",
-      "vault_category": "Psychische Erkrankungen und Diagnostik",
+      "vault_category": "Mental disorders and diagnostics",
       "terms": [
         "schizophrenia nursing",
         "psychosis nursing",
@@ -30,7 +30,7 @@
     },
     {
       "label": "borderline personality disorder",
-      "vault_category": "Psychische Erkrankungen und Diagnostik",
+      "vault_category": "Mental disorders and diagnostics",
       "terms": [
         "borderline personality disorder",
         "emotionally unstable personality disorder",
@@ -41,7 +41,7 @@
     },
     {
       "label": "bipolar disorder nursing",
-      "vault_category": "Psychische Erkrankungen und Diagnostik",
+      "vault_category": "Mental disorders and diagnostics",
       "terms": [
         "bipolar disorder nursing",
         "bipolar disorder care nursing",
@@ -53,7 +53,7 @@
     },
     {
       "label": "major depression nursing",
-      "vault_category": "Psychische Erkrankungen und Diagnostik",
+      "vault_category": "Mental disorders and diagnostics",
       "terms": [
         "depression nursing",
         "major depressive disorder nursing",
@@ -64,7 +64,7 @@
     },
     {
       "label": "anxiety disorders nursing",
-      "vault_category": "Psychische Erkrankungen und Diagnostik",
+      "vault_category": "Mental disorders and diagnostics",
       "terms": [
         "anxiety disorders nursing",
         "anxiety nursing care",
@@ -76,7 +76,7 @@
     },
     {
       "label": "OCD nursing",
-      "vault_category": "Psychische Erkrankungen und Diagnostik",
+      "vault_category": "Mental disorders and diagnostics",
       "terms": [
         "OCD nursing",
         "obsessive-compulsive disorder nursing",
@@ -86,7 +86,7 @@
     },
     {
       "label": "eating disorders nursing",
-      "vault_category": "Psychische Erkrankungen und Diagnostik",
+      "vault_category": "Mental disorders and diagnostics",
       "terms": [
         "eating disorders nursing",
         "anorexia nervosa nursing",
@@ -97,7 +97,7 @@
     },
     {
       "label": "PTSD / trauma nursing",
-      "vault_category": "Psychische Erkrankungen und Diagnostik",
+      "vault_category": "Mental disorders and diagnostics",
       "terms": [
         "PTSD nursing",
         "post-traumatic stress disorder nursing",
@@ -108,7 +108,7 @@
     },
     {
       "label": "substance use disorders nursing",
-      "vault_category": "Psychische Erkrankungen und Diagnostik",
+      "vault_category": "Mental disorders and diagnostics",
       "terms": [
         "substance use disorder nursing",
         "addiction nursing",
@@ -120,7 +120,7 @@
     },
     {
       "label": "dual diagnosis / comorbidity nursing",
-      "vault_category": "Psychische Erkrankungen und Diagnostik",
+      "vault_category": "Mental disorders and diagnostics",
       "terms": [
         "dual diagnosis nursing",
         "comorbidity mental health nursing",
@@ -131,7 +131,7 @@
     },
     {
       "label": "dementia psychiatric nursing",
-      "vault_category": "Psychische Erkrankungen und Diagnostik",
+      "vault_category": "Mental disorders and diagnostics",
       "terms": [
         "dementia nursing psychiatric",
         "dementia behavioural symptoms nursing",
@@ -142,7 +142,7 @@
     },
     {
       "label": "ADHD nursing",
-      "vault_category": "Psychische Erkrankungen und Diagnostik",
+      "vault_category": "Mental disorders and diagnostics",
       "terms": [
         "ADHD nursing",
         "attention deficit hyperactivity disorder nursing",
@@ -152,7 +152,7 @@
     },
     {
       "label": "autism spectrum disorder nursing",
-      "vault_category": "Psychische Erkrankungen und Diagnostik",
+      "vault_category": "Mental disorders and diagnostics",
       "terms": [
         "autism spectrum disorder nursing",
         "ASD nursing",
@@ -162,7 +162,7 @@
     },
     {
       "label": "personality disorders nursing",
-      "vault_category": "Psychische Erkrankungen und Diagnostik",
+      "vault_category": "Mental disorders and diagnostics",
       "terms": [
         "personality disorders nursing",
         "personality disorder nursing care",
@@ -173,7 +173,7 @@
     },
     {
       "label": "dialectical behavior therapy",
-      "vault_category": "Behandlung und Therapieansätze",
+      "vault_category": "Treatment and interventions",
       "terms": [
         "dialectical behavior therapy",
         "dialectical behaviour therapy",
@@ -185,7 +185,7 @@
     },
     {
       "label": "trauma-informed care nursing",
-      "vault_category": "Behandlung und Therapieansätze",
+      "vault_category": "Treatment and interventions",
       "terms": [
         "trauma-informed care",
         "trauma-informed nursing",
@@ -196,7 +196,7 @@
     },
     {
       "label": "therapeutic relationship / communication",
-      "vault_category": "Behandlung und Therapieansätze",
+      "vault_category": "Treatment and interventions",
       "terms": [
         "therapeutic relationship nursing",
         "therapeutic communication nursing",
@@ -208,7 +208,7 @@
     },
     {
       "label": "psychoeducation nursing",
-      "vault_category": "Behandlung und Therapieansätze",
+      "vault_category": "Treatment and interventions",
       "terms": [
         "psychoeducation nursing",
         "psychiatric patient education",
@@ -218,7 +218,7 @@
     },
     {
       "label": "recovery-oriented care nursing",
-      "vault_category": "Behandlung und Therapieansätze",
+      "vault_category": "Treatment and interventions",
       "terms": [
         "recovery-oriented care nursing",
         "recovery approach psychiatry",
@@ -229,7 +229,7 @@
     },
     {
       "label": "de-escalation / aggression management psychiatric",
-      "vault_category": "Behandlung und Therapieansätze",
+      "vault_category": "Treatment and interventions",
       "terms": [
         "de-escalation psychiatric",
         "aggression management psychiatric nursing",
@@ -240,7 +240,7 @@
     },
     {
       "label": "family interventions psychiatric nursing",
-      "vault_category": "Behandlung und Therapieansätze",
+      "vault_category": "Treatment and interventions",
       "terms": [
         "family intervention psychiatric nursing",
         "family therapy psychiatric nursing",
@@ -251,7 +251,7 @@
     },
     {
       "label": "early intervention psychosis nursing",
-      "vault_category": "Behandlung und Therapieansätze",
+      "vault_category": "Treatment and interventions",
       "terms": [
         "early intervention psychosis nursing",
         "first episode psychosis nursing",
@@ -261,7 +261,7 @@
     },
     {
       "label": "safewards / milieu therapy",
-      "vault_category": "Behandlung und Therapieansätze",
+      "vault_category": "Treatment and interventions",
       "terms": [
         "safewards",
         "milieu therapy psychiatric",
@@ -272,7 +272,7 @@
     },
     {
       "label": "open dialogue psychiatric nursing",
-      "vault_category": "Behandlung und Therapieansätze",
+      "vault_category": "Treatment and interventions",
       "terms": [
         "open dialogue psychiatry",
         "open dialogue nursing",
@@ -282,7 +282,7 @@
     },
     {
       "label": "motivational interviewing psychiatric nursing",
-      "vault_category": "Behandlung und Therapieansätze",
+      "vault_category": "Treatment and interventions",
       "terms": [
         "motivational interviewing psychiatric nursing",
         "motivational interviewing mental health nursing"
@@ -291,7 +291,7 @@
     },
     {
       "label": "mindfulness psychiatric nursing",
-      "vault_category": "Behandlung und Therapieansätze",
+      "vault_category": "Treatment and interventions",
       "terms": [
         "mindfulness psychiatric nursing",
         "mindfulness-based intervention psychiatric nursing",
@@ -301,7 +301,7 @@
     },
     {
       "label": "inpatient psychiatric nursing",
-      "vault_category": "Pflege als Profession und Wissenschaft",
+      "vault_category": "Nursing profession and science",
       "terms": [
         "inpatient psychiatric nursing",
         "acute psychiatric ward nursing",
@@ -312,7 +312,7 @@
     },
     {
       "label": "community mental health nursing",
-      "vault_category": "Pflege als Profession und Wissenschaft",
+      "vault_category": "Nursing profession and science",
       "terms": [
         "community mental health nursing",
         "community psychiatric nursing",
@@ -322,7 +322,7 @@
     },
     {
       "label": "home treatment / crisis resolution nursing",
-      "vault_category": "Pflege als Profession und Wissenschaft",
+      "vault_category": "Nursing profession and science",
       "terms": [
         "home treatment mental health nursing",
         "crisis resolution nursing",
@@ -333,7 +333,7 @@
     },
     {
       "label": "child adolescent psychiatric nursing",
-      "vault_category": "Pflege als Profession und Wissenschaft",
+      "vault_category": "Nursing profession and science",
       "terms": [
         "child psychiatric nursing",
         "adolescent psychiatric nursing",
@@ -344,7 +344,7 @@
     },
     {
       "label": "geriatric psychiatric nursing",
-      "vault_category": "Pflege als Profession und Wissenschaft",
+      "vault_category": "Nursing profession and science",
       "terms": [
         "geriatric psychiatric nursing",
         "old age psychiatry nursing",
@@ -355,7 +355,7 @@
     },
     {
       "label": "perinatal mental health nursing",
-      "vault_category": "Pflege als Profession und Wissenschaft",
+      "vault_category": "Nursing profession and science",
       "terms": [
         "perinatal mental health nursing",
         "postpartum psychiatric nursing",
@@ -366,7 +366,7 @@
     },
     {
       "label": "transcultural / refugee mental health nursing",
-      "vault_category": "Pflege als Profession und Wissenschaft",
+      "vault_category": "Nursing profession and science",
       "terms": [
         "transcultural psychiatric nursing",
         "cultural competence mental health nursing",
@@ -377,7 +377,7 @@
     },
     {
       "label": "intellectual disability psychiatric nursing",
-      "vault_category": "Pflege als Profession und Wissenschaft",
+      "vault_category": "Nursing profession and science",
       "terms": [
         "intellectual disability psychiatric nursing",
         "learning disability mental health nursing",
@@ -387,7 +387,7 @@
     },
     {
       "label": "evidence-based psychiatric nursing",
-      "vault_category": "Pflege als Profession und Wissenschaft",
+      "vault_category": "Nursing profession and science",
       "terms": [
         "evidence-based psychiatric nursing",
         "evidence-based mental health nursing",
@@ -397,7 +397,7 @@
     },
     {
       "label": "nursing theory / models psychiatry",
-      "vault_category": "Pflege als Profession und Wissenschaft",
+      "vault_category": "Nursing profession and science",
       "terms": [
         "nursing theory psychiatry",
         "psychiatric nursing models",
@@ -408,7 +408,7 @@
     },
     {
       "label": "forensic psychiatric nursing",
-      "vault_category": "Forensische Psychiatrie",
+      "vault_category": "Forensic psychiatry",
       "terms": [
         "forensic psychiatric nursing",
         "forensic mental health nursing",
@@ -419,7 +419,7 @@
     },
     {
       "label": "coercion / seclusion / restraint nursing",
-      "vault_category": "Forensische Psychiatrie",
+      "vault_category": "Forensic psychiatry",
       "terms": [
         "seclusion psychiatric nursing",
         "restraint psychiatric nursing",
@@ -430,7 +430,7 @@
     },
     {
       "label": "involuntary treatment / mental health law",
-      "vault_category": "Forensische Psychiatrie",
+      "vault_category": "Forensic psychiatry",
       "terms": [
         "involuntary psychiatric treatment",
         "compulsory treatment nursing",
@@ -441,7 +441,7 @@
     },
     {
       "label": "autonomy / ethics psychiatric nursing",
-      "vault_category": "Forensische Psychiatrie",
+      "vault_category": "Forensic psychiatry",
       "terms": [
         "autonomy psychiatric nursing",
         "informed consent psychiatry nursing",
@@ -452,7 +452,7 @@
     },
     {
       "label": "psychiatric nursing burnout / compassion fatigue",
-      "vault_category": "Pflegende selbst",
+      "vault_category": "Nurses themselves",
       "terms": [
         "psychiatric nursing burnout",
         "compassion fatigue psychiatric nursing",
@@ -463,7 +463,7 @@
     },
     {
       "label": "psychiatric nurse supervision / wellbeing",
-      "vault_category": "Pflegende selbst",
+      "vault_category": "Nurses themselves",
       "terms": [
         "clinical supervision psychiatric nursing",
         "psychiatric nurse wellbeing",
@@ -474,7 +474,7 @@
     },
     {
       "label": "psychiatric nursing education / training",
-      "vault_category": "Pflegende selbst",
+      "vault_category": "Nurses themselves",
       "terms": [
         "psychiatric nursing education",
         "mental health nursing training",
@@ -485,7 +485,7 @@
     },
     {
       "label": "psychiatric nursing workforce / staffing",
-      "vault_category": "Pflegende selbst",
+      "vault_category": "Nurses themselves",
       "terms": [
         "psychiatric nursing workforce",
         "mental health nursing staffing",
@@ -496,7 +496,7 @@
     },
     {
       "label": "psychiatric nursing leadership / management",
-      "vault_category": "Pflegende selbst",
+      "vault_category": "Nurses themselves",
       "terms": [
         "psychiatric nursing leadership",
         "mental health nursing management",
@@ -506,7 +506,7 @@
     },
     {
       "label": "moral distress / ethical stress nursing",
-      "vault_category": "Pflegende selbst",
+      "vault_category": "Nurses themselves",
       "terms": [
         "moral distress psychiatric nursing",
         "ethical stress nursing",

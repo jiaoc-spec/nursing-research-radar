@@ -71,7 +71,7 @@ Keyword groups control API search granularity. The optional `vault_category` fie
 ```json
 {
   "label": "dialectical behavior therapy",
-  "vault_category": "Behandlung und Therapieansätze",
+  "vault_category": "Treatment and interventions",
   "terms": ["dialectical behavior therapy", "DBT skills training"]
 }
 ```
@@ -95,10 +95,10 @@ python3 scripts/paper_vault.py import-high \
   --digest-data-dir psychiatry-medicine-digests/data \
   --config psychiatry-medicine-digest.config.json \
   --priority Medium --max-areas 12 \
-  --digest-label "Psychiatrie-Medizin-Digest" --no-require-fulltext
+  --digest-label "Psychiatry-Medicine-Digest" --no-require-fulltext
 ```
 
-Papers are deduplicated by DOI/PMID across runs. The frontend renders a tab strip (Alle Digests / Nursing-Digest / Psychiatrie-Medizin-Digest / …) and groups papers by Digest → Vault Category → Paper when multiple digests are present.
+Papers are deduplicated by DOI/PMID across runs. The frontend renders a tab strip (All Digests / Nursing-Digest / Psychiatry-Medicine-Digest / …) and groups papers by Digest → Vault Category → Paper when multiple digests are present.
 
 ## Classification Rules
 
@@ -111,7 +111,7 @@ Papers are deduplicated by DOI/PMID across runs. The frontend renders a tab stri
 
 Examples of acceptable broad categories:
 
-- For psychiatric nursing: `Psychische Erkrankungen und Diagnostik`, `Behandlung und Therapieansätze`, `Pflege als Profession und Wissenschaft`, `Forensische Psychiatrie`, `Pflegende selbst`.
+- For psychiatric nursing: `Mental disorders and diagnostics`, `Treatment and interventions`, `Nursing profession and science`, `Forensic psychiatry`, `Nurses themselves`.
 - For biomedical research: `Clinical Evidence`, `Molecular Mechanisms`, `Imaging and Diagnostics`, `Therapeutics`, `Data Methods`.
 - For social science: `Policy`, `Behavior`, `Institutions`, `Methods`, `Equity`.
 

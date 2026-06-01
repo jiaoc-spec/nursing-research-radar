@@ -48,17 +48,17 @@ Frontend template for the vault lives in `assets/frontend-template/`.
      "keyword_groups": [
        {
          "label": "psychiatric nursing",
-         "vault_category": "Pflege als Profession und Wissenschaft",
+         "vault_category": "Nursing profession and science",
          "terms": ["psychiatric nursing", "mental health nursing", "psychiatric-mental health nursing"]
        },
        {
          "label": "borderline personality disorder",
-         "vault_category": "Psychische Erkrankungen und Diagnostik",
+         "vault_category": "Mental disorders and diagnostics",
          "terms": ["borderline personality disorder", "emotionally unstable personality disorder", "BPD nursing care"]
        },
        {
          "label": "dialectical behavior therapy",
-         "vault_category": "Behandlung und Therapieansätze",
+         "vault_category": "Treatment and interventions",
          "terms": ["dialectical behavior therapy", "dialectical behaviour therapy", "DBT skills training"]
        }
      ],
@@ -114,36 +114,35 @@ Frontend template for the vault lives in `assets/frontend-template/`.
 
 ## Digest Structure
 
-Group papers by priority using `##` section headings, then give each paper a `###` heading with a short German title:
+Group papers by priority using `##` section headings in the resolved digest language, then give each paper a `###` heading with a short descriptive title in that same language:
 
 ```
-## HOHE PRIORITÄT
+## [Localized high priority heading]
 
 ---
 
-### 1 — [Kurzer deutscher Titel]
+### 1 — [Short localized title]
 
-**Titel:** [Original English title]
+**[Localized original-title label]:** [Original title]
 ...
 
-## MITTLERE PRIORITÄT
+## [Localized medium priority heading]
 
 ---
 
-### 2 — [Kurzer deutscher Titel]
+### 2 — [Short localized title]
 ...
 
-## NIEDRIGE PRIORITÄT
+## [Localized low priority heading]
 
 ---
 
-### 3 — [Kurzer deutscher Titel]
+### 3 — [Short localized title]
 ...
 ```
 
-- The `###` heading uses a short descriptive German title (translated/paraphrased from the original), not a literal word-for-word translation.
-- The original English title follows immediately as `**Titel:**` field below the heading.
-- If the digest language is not German, use the configured language for the short heading title instead.
+- The `###` heading uses a short descriptive title in the resolved digest language, paraphrased from the original title rather than copied verbatim.
+- The original paper title follows immediately in a localized original-title field below the heading.
 - If `language` is `auto`, use the resolved language from the fetch JSON's `language` field, not the literal word `auto`.
 
 ## Paper Vault
@@ -161,11 +160,11 @@ The Paper Vault is a local static web dashboard that makes high-priority papers 
 Keyword groups control PubMed/Crossref/arXiv search granularity. The `vault_category` field on each group controls how papers are grouped in the vault display. Use 3–5 broad `vault_category` values per digest regardless of how many keyword groups exist.
 
 Example for psychiatric nursing (5 vault categories, 46 keyword groups):
-- `"Psychische Erkrankungen und Diagnostik"` — schizophrenia, BPD, depression, anxiety, substance use, …
-- `"Behandlung und Therapieansätze"` — DBT, trauma-informed care, de-escalation, psychoeducation, …
-- `"Pflege als Profession und Wissenschaft"` — inpatient, community, evidence-based, nursing theory, …
-- `"Forensische Psychiatrie"` — forensic nursing, coercion, restraint, involuntary treatment, …
-- `"Pflegende selbst"` — burnout, supervision, moral distress, workforce, education, …
+- `"Mental disorders and diagnostics"` — schizophrenia, BPD, depression, anxiety, substance use, …
+- `"Treatment and interventions"` — DBT, trauma-informed care, de-escalation, psychoeducation, …
+- `"Nursing profession and science"` — inpatient, community, evidence-based, nursing theory, …
+- `"Forensic psychiatry"` — forensic nursing, coercion, restraint, involuntary treatment, …
+- `"Nurses themselves"` — burnout, supervision, moral distress, workforce, education, …
 
 ### Setup
 
@@ -190,7 +189,7 @@ cd <VAULT_DIR> && python3 -m http.server 8766 --bind 127.0.0.1
 
 ### Multi-digest vault
 
-Run `import-high` once per digest config, each with its own `--digest-label`. Papers are deduplicated by DOI/PMID across runs. The frontend shows a tab strip (Alle Digests / Nursing-Digest / Psychiatrie-Medizin-Digest / …) and groups papers by Digest → Vault Category → Paper.
+Run `import-high` once per digest config, each with its own `--digest-label`. Papers are deduplicated by DOI/PMID across runs. The frontend shows a tab strip (All Digests / Nursing-Digest / Psychiatry-Medicine-Digest / …) and groups papers by Digest → Vault Category → Paper.
 
 ### Full-text requirement
 

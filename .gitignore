@@ -1,1 +1,13 @@
 .DS_Store
+
+# Local/private digest configuration and secrets
+*.local.json
+*.local.sh
+*.local.py
+.env
+secrets/
+private-digest-configs/
+
+# Generated local output
+nursing-literature-digests/
+paper-vault-site/

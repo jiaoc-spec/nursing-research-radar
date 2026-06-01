@@ -1,20 +1,29 @@
 #!/bin/bash
-# Daily nursing literature digest — triggered by launchd at 09:00
+# Daily nursing literature digest runner.
+# Public template: configure paths with environment variables or a local config file.
 set -euo pipefail
-cd /Users/jiaocheng
 
-PLUGIN_SCRIPT="/Users/jiaocheng/.claude/plugins/nursing-literature-digest/scripts/daily_literature_digest.py"
-CONFIG="/Users/jiaocheng/nursing-literature-digest.config.json"
-OUTPUT_DIR="/Users/jiaocheng/nursing-literature-digests"
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+REPO_ROOT="$(cd "$SCRIPT_DIR/.." && pwd)"
+
+PLUGIN_SCRIPT="${NURSING_DIGEST_SCRIPT:-$REPO_ROOT/scripts/daily_literature_digest.py}"
+CONFIG="${NURSING_DIGEST_CONFIG:-$REPO_ROOT/config/nursing-literature-digest.config.json}"
+OUTPUT_DIR="${NURSING_DIGEST_OUTPUT_DIR:-$REPO_ROOT/nursing-literature-digests}"
+EMAIL_SCRIPT="${NURSING_DIGEST_EMAIL_SCRIPT:-$REPO_ROOT/email-scripts/nursing-literature-digest-email.py}"
+VAULT_SCRIPT="${NURSING_DIGEST_VAULT_SCRIPT:-$REPO_ROOT/scripts/paper_vault.py}"
+VAULT_DIR="${NURSING_DIGEST_VAULT_DIR:-$REPO_ROOT/paper-vault-site}"
 TODAY=$(date +%Y-%m-%d)
 DIGEST_FILE="$OUTPUT_DIR/$TODAY.md"
 INBOX_FILE="$OUTPUT_DIR/fulltext-inbox/to-download-$TODAY.md"
 LOG_FILE="$OUTPUT_DIR/run-$TODAY.log"
 
+mkdir -p "$OUTPUT_DIR" "$OUTPUT_DIR/fulltext-inbox"
 exec >> "$LOG_FILE" 2>&1
-echo "=== Nursing Literature Digest: $TODAY $(date +%T) ==="
 
-# Step 1: fetch papers via PubMed / Crossref / arXiv
+echo "=== Nursing Literature Digest: $TODAY $(date +%T) ==="
+echo "Config: $CONFIG"
+
+# Step 1: fetch papers via PubMed / Crossref / OpenAlex / arXiv.
 echo "[1] Fetching papers..."
 JSON_PATH=$(/usr/bin/python3 "$PLUGIN_SCRIPT" --config "$CONFIG" fetch)
 
@@ -24,114 +33,113 @@ if [ -z "$JSON_PATH" ]; then
 fi
 echo "    JSON: $JSON_PATH"
 
-# Step 2: Claude writes the digest
+DIGEST_LANGUAGE=$(/usr/bin/python3 -c 'import json,sys; print(json.load(open(sys.argv[1], encoding="utf-8")).get("language") or "en")' "$JSON_PATH")
+echo "    Digest language: $DIGEST_LANGUAGE"
+
+# Step 2: Claude writes the digest.
 echo "[2] Writing digest with Claude..."
 /usr/local/bin/claude -p \
   --allowedTools "Bash,Read,Write,Edit" \
   --output-format text \
   "$(cat <<PROMPT
-Heute ist $TODAY. Schreibe den täglichen Pflegeliteratur-Digest auf Deutsch.
-Der Fokus liegt auf psychiatrischer und mentaler Pflegeforschung:
-psychiatrische Pflege, therapeutische Beziehung, Persönlichkeitsstörungen, DBT, psychische Krisen, traumainformierte Pflege, forensische Psychiatriepflege, Psychopharmakologie in der Pflege.
+Today is $TODAY.
+Write the daily nursing literature digest in this target language: $DIGEST_LANGUAGE.
+If the target language is zh-CN, use Simplified Chinese. If it is zh-TW, use Traditional Chinese.
 
-Lies: $JSON_PATH
-Speichere vollständigen Digest als Markdown in: $DIGEST_FILE
+Read the fetch JSON: $JSON_PATH
+Save the complete Markdown digest to: $DIGEST_FILE
 
-WICHTIG: Verwende folgendes detailliertes Format (analog zum Beispiel-Digest vom 26. Mai 2026):
+Audience and scope:
+- Nursing and psychiatric/mental health nursing readers.
+- Use only metadata, title, abstract, MeSH terms, keywords, authors, DOI/PMID/URL, journal, publisher, source, and relevance fields in the JSON.
+- Do not invent methods, results, limitations, or conclusions when they are not present.
+- Mark arXiv items as preprints.
+- Mark high-impact clinical or nursing journals as required reading when justified.
 
-KOPFZEILE:
-# Psychiatrische Pflegeliteratur-Digest — [Datum ausgeschrieben, z.B. 27. Mai 2026]
-**Zeitfenster:** [window_from_date]–[window_until_date]
-**Quellen:** [Datenquellen aus JSON, z.B. PubMed/MEDLINE, Crossref, OpenAlex; arXiv-Status erwähnen]
-**Papiere im Digest:** [N] (davon [M] Systematic Reviews / Meta-Analysen falls vorhanden)
-**Gefiltert (Relevanzwert < 2):** [K] weitere Einträge
+Required output language rule:
+- All generated headings, section labels, explanations, and summaries must be in $DIGEST_LANGUAGE.
+- Keep original paper titles in their original language in a dedicated original-title field.
+- Give each paper a short descriptive heading in $DIGEST_LANGUAGE, not a copied English title.
 
-WENN KEINE PAPER GEFUNDEN (alle unter Relevanzschwelle):
-- Klarer Hinweis, dass heute keine qualifizierten Paper gefunden wurden
-- Vollständiges Fehlerprotokoll aus dem errors-Array als Tabelle
+Header:
+# [Localized title for "Nursing Literature Digest"] — [localized written date]
 
-STRUKTUR (wenn Paper vorhanden):
-- Sortiere alle Paper nach relevance_score in Prioritätssektionen:
-  ## Papier [N] — HOHE PRIORITÄT   (relevance_score ≥ 4)
-  ## Papier [N] — MITTLERE PRIORITÄT (relevance_score 2–3)
-  ## Papier [N] — NIEDRIGE PRIORITÄT (relevance_score < 2, aber Abstract vorhanden)
-- Nummeriere Paper fortlaufend (1, 2, 3 ...)
-- Besonders wichtige Paper (Lancet, NEJM, Nature, Science, Cell, Cochrane) mit [PFLICHTLEKTÜRE] markieren
+Include a compact metadata table with localized labels for:
+- date
+- number of qualified papers
+- priority distribution
+- search window
+- data sources
+- run_id
+- run_stamp
 
-PRO PAPER — PFLICHTFELDER:
-**Titel:** [vollständiger englischer Originaltitel]
-**Zeitschrift:** [Journal-Name] [*(hochrangige psychiatrische Pflegezeitschrift)* o.ä. bei Top-Journals]
-**Publikationstyp:** [Studientyp, z.B. Editorial, RCT, Systematischer Review, Kohortenstudie]
-**Datum:** [Datum]
-**Autoren:** [Autoren aus JSON]
-**DOI/URL:** [URL]
-**PMID:** [PMID falls vorhanden]
-**Quelle:** [PubMed/MEDLINE, Crossref, OpenAlex, arXiv]
-**Matched Keyword:** [matched_keywords aus JSON]
-**MeSH-Terme:** [mesh_terms aus JSON, oder "keine angegeben"]
-**Relevanz-Score:** [score]/10
+If no papers qualified:
+- State clearly in $DIGEST_LANGUAGE that no qualified papers were found today.
+- Include API/source errors from the JSON errors array as a localized table.
 
-**Forschungsziel:**
-[1–2 Sätze: Was wurde untersucht? Welche Frage/Hypothese? Nur aus title+abstract — nichts erfinden]
+If papers are present:
+- Group papers by priority with localized ## section headings for high, medium, and low priority.
+- Use one ### heading per paper:
+  ### [N] — [short descriptive heading in $DIGEST_LANGUAGE, max. 80 characters]
+- Number papers continuously across sections.
 
-**Methode:**
-[1–3 Sätze: Studiendesign, n, Intervention/Exposition, Outcomes, Statistik — nur wenn im Abstract beschrieben; bei Reviews: Suchstrategie, Einschlusskriterien]
-[WEGLASSEN wenn kein Abstract vorhanden — stattdessen: "Kein Abstract verfügbar — Titelbasierte Einschätzung:"]
+For each paper include localized field labels for:
+- original title
+- journal
+- publication type
+- date
+- authors
+- DOI/URL
+- PMID, if available
+- source
+- matched keywords
+- MeSH terms, or a localized "none provided"
+- relevance score
+- research objective
+- method
+- key findings or main statements
+- limitations, only if mentioned in the abstract
+- relevance for psychiatric/mental health nursing
+- next steps, only if useful
 
-**Wesentliche Aussagen / Ergebnisse:**
-- [konkretes Ergebnis oder Aussage mit Zahlen/Statistik wo vorhanden, fett für Schlüsselzahlen]
-- [weiteres Ergebnis oder Kernaussage]
-[Bei Reviews/Editorials: Wesentliche Aussagen statt Ergebnisse]
+No-abstract rule:
+- If no abstract is available, do not infer research objective, method, or results.
+- Write a title-level assessment only.
+- Add title + DOI/PMID/URL to: $INBOX_FILE with a localized note meaning "No abstract - retrieve full text manually".
 
-**Limitationen:**
-[Nur wenn im Abstract erwähnt, 1 Satz; sonst weglassen]
-
-**Relevanz für die psychiatrische Pflege:**
-[2–3 Sätze: Bedeutung für psychiatrische Pflegepraxis, Ausbildung oder Forschung. Open Access erwähnen falls zutreffend]
-
-**Nächste Schritte:** [Volltext-Link, Verwendungsmöglichkeit — optional, nur wenn sinnvoll]
-
----
-
-ZUSATZ:
-- Paper ohne Abstract → Titel + DOI/PMID auch in: $INBOX_FILE mit Hinweis [Kein Abstract – Volltext manuell abrufen]
-- Fehler aus dem errors-Array am Ende auflisten (z.B. arXiv-Timeouts) als Tabelle
-- Keine Schlussfolgerungen erfinden: Nur aus title, abstract, MeSH, keywords schöpfen
-
-Führe abschliessend aus:
+Finish by running exactly this command after the Markdown file exists:
 /usr/bin/python3 "$PLUGIN_SCRIPT" --config "$CONFIG" mark-success --data-file "$JSON_PATH" --digest-file "$DIGEST_FILE" --email-status EMAIL_PENDING
 
-Gib am Ende genau eine Zeile aus: DIGEST_OK oder DIGEST_FAILED
+At the very end, output exactly one line: DIGEST_OK or DIGEST_FAILED
 PROMPT
 )"
 
-# Step 3: send email via Gmail SMTP
+# Step 3: send email via Gmail SMTP, if configured.
 echo "[3] Sending email..."
 EMAIL_STATUS="not-configured"
-if /usr/bin/python3 /Users/jiaocheng/nursing-literature-digest-email.py "$DIGEST_FILE" "$TODAY"; then
+if /usr/bin/python3 "$EMAIL_SCRIPT" "$DIGEST_FILE" "$TODAY" --config "$CONFIG" --language "$DIGEST_LANGUAGE"; then
     EMAIL_STATUS="sent"
 else
     EMAIL_STATUS="failed"
 fi
 echo "    Email status: $EMAIL_STATUS"
 
-# Step 4: update state with final email status
+# Step 4: update state with final email status.
 /usr/bin/python3 "$PLUGIN_SCRIPT" --config "$CONFIG" mark-success \
   --data-file "$JSON_PATH" \
   --digest-file "$DIGEST_FILE" \
   --email-status "$EMAIL_STATUS"
 
-# Step 5: update Paper Vault
+# Step 5: update Paper Vault. This is non-fatal.
 echo "[5] Updating Paper Vault..."
-/usr/bin/python3 /Users/jiaocheng/.claude/skills/paper-vault/scripts/paper_vault.py import-high \
-  --vault-dir /Users/jiaocheng/nursing-paper-vault-site \
-  --digest-data-dir /Users/jiaocheng/nursing-literature-digests/data \
+/usr/bin/python3 "$VAULT_SCRIPT" import-high \
+  --vault-dir "$VAULT_DIR" \
+  --digest-data-dir "$OUTPUT_DIR/data" \
   --config "$CONFIG" \
   --priority Medium \
   --max-areas 12 \
   --digest-label "Nursing-Digest" \
   --no-require-fulltext \
-  --translate \
   || echo "    WARN: Vault import failed (non-fatal)"
 
 echo "[5] Done. Digest: $DIGEST_FILE"

@@ -8,30 +8,30 @@
     <key>ProgramArguments</key>
     <array>
         <string>/bin/bash</string>
-        <string>/Users/jiaocheng/obsidian-digest-sync.sh</string>
+        <string>/path/to/obsidian-digest-sync.sh</string>
     </array>
 
     <key>WatchPaths</key>
     <array>
-        <string>/Users/jiaocheng/nursing-literature-digests</string>
-        <string>/Users/jiaocheng/psychiatry-medicine-digests</string>
-        <string>/Users/jiaocheng/ki-pflege-digests</string>
+        <string>/path/to/nursing-literature-digests</string>
+        <string>/path/to/psychiatry-medicine-digests</string>
+        <string>/path/to/ki-pflege-digests</string>
     </array>
 
     <key>RunAtLoad</key>
     <true/>
 
     <key>StandardOutPath</key>
-    <string>/Users/jiaocheng/obsidian-digest-sync.out.log</string>
+    <string>/path/to/obsidian-digest-sync.out.log</string>
     <key>StandardErrorPath</key>
-    <string>/Users/jiaocheng/obsidian-digest-sync.err.log</string>
+    <string>/path/to/obsidian-digest-sync.err.log</string>
 
     <key>EnvironmentVariables</key>
     <dict>
         <key>PATH</key>
         <string>/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin</string>
         <key>HOME</key>
-        <string>/Users/jiaocheng</string>
+        <string>/path/to/home</string>
     </dict>
 </dict>
 </plist>
