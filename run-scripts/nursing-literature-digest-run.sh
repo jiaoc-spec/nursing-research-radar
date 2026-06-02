@@ -36,12 +36,9 @@ echo "    JSON: $JSON_PATH"
 DIGEST_LANGUAGE=$(/usr/bin/python3 -c 'import json,sys; print(json.load(open(sys.argv[1], encoding="utf-8")).get("language") or "en")' "$JSON_PATH")
 echo "    Digest language: $DIGEST_LANGUAGE"
 
-# Step 2: Claude writes the digest.
+# Step 2: Claude writes the digest (up to 3 attempts for transient API errors).
 echo "[2] Writing digest with Claude..."
-/usr/local/bin/claude -p \
-  --allowedTools "Bash,Read,Write,Edit" \
-  --output-format text \
-  "$(cat <<PROMPT
+CLAUDE_PROMPT="$(cat <<PROMPT
 Today is $TODAY.
 Write the daily nursing literature digest in this target language: $DIGEST_LANGUAGE.
 If the target language is zh-CN, use Simplified Chinese. If it is zh-TW, use Traditional Chinese.
@@ -113,6 +110,32 @@ Finish by running exactly this command after the Markdown file exists:
 At the very end, output exactly one line: DIGEST_OK or DIGEST_FAILED
 PROMPT
 )"
+
+CLAUDE_MAX_ATTEMPTS=3
+CLAUDE_ATTEMPT=0
+CLAUDE_SUCCESS=0
+while [ $CLAUDE_ATTEMPT -lt $CLAUDE_MAX_ATTEMPTS ]; do
+    CLAUDE_ATTEMPT=$((CLAUDE_ATTEMPT + 1))
+    echo "    Attempt $CLAUDE_ATTEMPT/$CLAUDE_MAX_ATTEMPTS..."
+    if /usr/local/bin/claude -p \
+        --allowedTools "Bash,Read,Write,Edit" \
+        --output-format text \
+        "$CLAUDE_PROMPT"; then
+        CLAUDE_SUCCESS=1
+        break
+    else
+        echo "    WARN: Claude call failed (attempt $CLAUDE_ATTEMPT). Exit: $?"
+        if [ $CLAUDE_ATTEMPT -lt $CLAUDE_MAX_ATTEMPTS ]; then
+            echo "    Retrying in 30 seconds..."
+            sleep 30
+        fi
+    fi
+done
+
+if [ $CLAUDE_SUCCESS -eq 0 ]; then
+    echo "ERROR: Claude failed after $CLAUDE_MAX_ATTEMPTS attempts. Aborting."
+    exit 1
+fi
 
 # Step 3: send email via Gmail SMTP, if configured.
 echo "[3] Sending email..."
