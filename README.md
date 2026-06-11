@@ -1,8 +1,8 @@
-# Nursing Literature Digest Skill
+# Nursing Research Radar
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-A [Claude Code](https://claude.ai/code) skill for automated daily nursing and psychiatric nursing literature digests — with an integrated **Paper Vault** for building a searchable local research library.
+An AI-powered tool for automated daily nursing and psychiatric nursing literature digests — with an integrated **Paper Vault** for building a searchable local research library.
 
 Monitors **PubMed/MEDLINE**, **Crossref**, **OpenAlex**, and **arXiv** for new papers, writes AI-powered summaries in your chosen language, saves local Markdown archives, sends daily email digests via Gmail, and automatically imports high-priority papers into a browsable local web vault.
 
@@ -17,7 +17,7 @@ Monitors **PubMed/MEDLINE**, **Crossref**, **OpenAlex**, and **arXiv** for new p
 - Summarises title, abstract, MeSH terms, authors, journal, DOI, and research relevance
 - Highlights high-impact psychiatric nursing journals (JPMHN, IJMHN, APN, IMHN, PPC)
 - Saves archives to `nursing-literature-digests/YYYY-MM-DD.md`
-- Sends digest by email through Gmail (SMTP or Claude Code Gmail connector)
+- Sends digest by email through Gmail (SMTP)
 - Works fully unattended via launchd (macOS) or cron automation
 
 **Paper Vault** *(integrated from [research-radar-paper-vault](https://github.com/xuezheng627/research-radar-paper-vault) by xuezheng627)*
@@ -40,31 +40,31 @@ Nurses, nursing students, and researchers specialising in **psychiatric and ment
 
 ## Requirements
 
-- [Claude Code](https://claude.ai/code) (CLI or desktop app)
+- An AI coding assistant that supports skills/slash commands (e.g. Claude Code, or any compatible agent)
 - Python 3.9 or later
 - Internet access to PubMed/NCBI, Crossref, OpenAlex, and arXiv APIs. Some services may require contact information, API keys, or rate-limit compliance; for example, OpenAlex requires an API key for regular API use as of February 13, 2026.
-- Gmail SMTP credentials or Claude Code Gmail connector (optional, for email delivery)
+- Gmail SMTP credentials (optional, for email delivery)
 
 ---
 
 ## Installation
 
-1. Copy this skill folder into your Claude Code skills directory:
+1. Copy this skill folder into your AI assistant's skills directory. For Claude Code:
    ```bash
    cp -r nursing-literature-digest ~/.claude/skills/
    ```
 
-2. In a Claude Code conversation, invoke the skill:
+2. Invoke the skill in a conversation with your AI assistant:
    ```
    /nursing-literature-digest
    ```
-   Claude will guide you through setup interactively.
+   The assistant will guide you through setup interactively.
 
 ---
 
 ## Configuration
 
-During setup, Claude creates a `nursing-literature-digest.config.json` in your workspace. Key fields:
+During setup, the assistant creates a `nursing-literature-digest.config.json` in your workspace. Key fields:
 
 | Field | Description | Default |
 |---|---|---|
@@ -145,7 +145,7 @@ cd my-vault && python3 -m http.server 8766 --bind 127.0.0.1
 
 ```
 nursing-literature-digest/
-├── SKILL.md                          # Claude Code skill definition (digest + vault)
+├── SKILL.md                          # Skill definition (digest + vault)
 ├── paper-vault-SKILL.md              # Standalone Paper Vault skill definition
 ├── README.md                         # This file
 ├── LICENSE                           # MIT License
@@ -189,4 +189,4 @@ The tool is designed to work with openly available metadata, abstracts, and user
 
 Users are responsible for complying with the terms, rate limits, attribution requirements, and acceptable-use policies of all external services they configure or access, including PubMed/NCBI, Crossref, OpenAlex, arXiv, Gmail, and any publisher or institution.
 
-This project is not affiliated with, endorsed by, or sponsored by Anthropic, Claude, PubMed/NCBI, Crossref, OpenAlex, arXiv, Google, Gmail, or any publisher mentioned in the documentation.
+This project is not affiliated with, endorsed by, or sponsored by PubMed/NCBI, Crossref, OpenAlex, arXiv, Google, Gmail, Anthropic, or any AI provider or publisher mentioned in the documentation.
